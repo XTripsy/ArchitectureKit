@@ -8,7 +8,7 @@ public sealed class LevelManager : Manager
     private IEventBus _bus;
     private bool _isLoading;
     private readonly HashSet<string> _contentScenes = new();
-    [SerializeField] private string _persistentSceneName = "";
+    private string _persistentSceneName = "";
 
     public void Init(IEventBus temp_bus) 
     {

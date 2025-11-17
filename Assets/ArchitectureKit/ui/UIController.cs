@@ -12,7 +12,6 @@ public sealed class UIController
         _ui = temp_ui;
 
         UIActionMainMenuState temp = new UIActionMainMenuState(_bus, _ui);
-
         _bus.ISubscribe<MainMenuStateEnter>( _=> temp.OnMainMenuEnter());
         _bus.ISubscribe<MainMenuStateExit>( _=> temp.OnMainMenuExit());
     }

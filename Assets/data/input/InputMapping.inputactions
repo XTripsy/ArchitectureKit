@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "InputMapping",
+    "maps": [
+        {
+            "name": "mainmenu_mapping",
+            "id": "1aaaef5b-5089-4eb7-b1a3-e673631afe35",
+            "actions": [
+                {
+                    "name": "action_play",
+                    "type": "Button",
+                    "id": "82c457a9-99bd-4eff-9610-5d64fd8b9beb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fd13dd13-e9af-4f08-8a09-da790df1b0ad",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "action_play",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
