@@ -8,7 +8,7 @@ public sealed class UIActionMainMenuState
 
     public UIActionMainMenuState(IEventBus bus, IUI ui)
     {
-        _bus = bus; 
+        _bus = bus;
         _ui = ui;
     }
 
