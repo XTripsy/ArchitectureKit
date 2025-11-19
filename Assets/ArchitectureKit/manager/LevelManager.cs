@@ -10,7 +10,7 @@ public sealed class LevelManager : Manager
     private readonly HashSet<string> _contentScenes = new();
     private string _persistentSceneName = "";
 
-    public void Init(IEventBus temp_bus) 
+    public LevelManager(IEventBus temp_bus) 
     {
         _bus = temp_bus;
         _bus.ISubscribe<SLevelRequest>(OnSwitch);
@@ -75,4 +75,8 @@ public sealed class LevelManager : Manager
             _contentScenes.Add(name);
         }
     }
+
+    public void IStart() {}
+
+    public void IUpdate() {}
 }

@@ -5,18 +5,23 @@ using UnityEngine;
 
 public class UIManager : Manager, IUI
 {
-    [SerializeField] private Canvas _canvas;
-    [SerializeField] private UICatalog _catalog;
+    /*public Canvas _canvas;
+    public UICatalog _catalog;*/
+    private UIGroup _group;
+    private IFactory<FactoryComponent.Args, GameObject> _factory;
 
     private Dictionary<string, UICatalog.Entry> _prefabs = new();
     private Dictionary<string, GameObject> _inst = new();
     private Dictionary<(string, string), Component> _cache = new();
 
-    private void Awake() 
+    public UIManager(UIGroup group, IFactory<FactoryComponent.Args, GameObject> factory)
     {
+        _group = group;
+        _factory = factory;
+
         _prefabs.Clear();
-        if (_catalog == null || _canvas == null) return;
-        foreach (var e in _catalog.entries)
+        if (_group.catalog == null || _group.canvas == null) return;
+        foreach (var e in _group.catalog.entries)
             if (!string.IsNullOrWhiteSpace(e.name) && e.prefab != null)
                 _prefabs[e.name] = e;
     }
@@ -54,7 +59,8 @@ public class UIManager : Manager, IUI
         if (_inst.TryGetValue(name, out var existing) && existing) return existing;
         if (!_prefabs.TryGetValue(name, out var entry) || !entry.prefab) return null;
 
-        existing = Instantiate(entry.prefab, _canvas.transform);
+        FactoryComponent.Args temp = new FactoryComponent.Args(entry.prefab, _group.canvas.transform, FactoryComponent.EType.eRectTransform);
+        existing = _factory.Create(temp);
         _inst[name] = existing;
         _ApplyCanvasOptions(existing, name);
         if (entry.defaultHidden) existing.SetActive(false);
@@ -83,4 +89,7 @@ public class UIManager : Manager, IUI
         return cur;
     }
 
+    public void IStart() {}
+
+    public void IUpdate() {}
 }

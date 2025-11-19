@@ -1,3 +1,7 @@
 using UnityEngine;
 
-public class Manager : MonoBehaviour {}
+public interface Manager
+{
+    void IStart();
+    void IUpdate();
+}

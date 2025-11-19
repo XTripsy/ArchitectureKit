@@ -5,19 +5,17 @@ public sealed class InputManager : Manager
 {
     private IEventBus _bus;
 
-    [SerializeField] private InputActionAsset _action;
-
-    [Header("Map Mapping")]
-    [SerializeField] private string _mapMainMenu;
-
-    [Header("Action Mapping")]
-    [SerializeField] private string _actionPlay;
+    /*private InputActionAsset _action;
+    private string _mapMainMenu;
+    private string _actionPlay;*/
+    private InputGroup _group;
 
     private InputAction _aPlay;
 
-    public void Init(IEventBus bus)
+    public InputManager(IEventBus bus, InputGroup group)
     {
         _bus = bus;
+        _group = group;
 
         _bus.ISubscribe<MainMenuStateEnter>(_ => EnableMainMenu());
 
@@ -27,13 +25,13 @@ public sealed class InputManager : Manager
 
     private void BindAction()
     {
-        if (_action == null) return;
+        if (_group.action == null) return;
 
-        var mapMainMenu = _action.FindActionMap(_mapMainMenu, throwIfNotFound: false);
+        var mapMainMenu = _group.action.FindActionMap(_group.mapMainMenu, throwIfNotFound: false);
 
         if (mapMainMenu != null)
         {
-            _aPlay = mapMainMenu.FindAction(_actionPlay, false);
+            _aPlay = mapMainMenu.FindAction(_group.actionPlay, false);
         }
     }
 
@@ -48,11 +46,15 @@ public sealed class InputManager : Manager
     private void EnableMainMenu()
     {
         DisableAll();
-        _action.FindActionMap(_mapMainMenu, false)?.Enable();
+        _group.action.FindActionMap(_group.mapMainMenu, false)?.Enable();
     }
 
     private void DisableAll()
     {
-        foreach (var map in _action.actionMaps) map.Disable();
+        foreach (var map in _group.action.actionMaps) map.Disable();
     }
+
+    public void IStart() {}
+
+    public void IUpdate() {}
 }
