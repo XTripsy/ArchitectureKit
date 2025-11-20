@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public interface Manager
+public interface IGameLoopManager
 {
-    void IStart();
     void IUpdate();
 }

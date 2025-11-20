@@ -8,7 +8,7 @@ public sealed class StateController
 
     public StateController(IEventBus bus, GameState state, IKeyFactory<FactoryState.EState, IState> factory)
     {
-        _bus = bus; 
+        _bus = bus;
         _state = state;
         _factory = factory;
 

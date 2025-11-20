@@ -1,12 +1,11 @@
-using UnityEngine;
-using UnityEngine.UI;
+using UIMainMenu;
 
 public sealed class UIController
 {
     private readonly IEventBus _bus;
-    private readonly IUI _ui;
+    private readonly IUIManager _ui;
 
-    public UIController(IEventBus temp_bus, IUI temp_ui)
+    public UIController(IEventBus temp_bus, IUIManager temp_ui)
     {
         _bus = temp_bus; 
         _ui = temp_ui;

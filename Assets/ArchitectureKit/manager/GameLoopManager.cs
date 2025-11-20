@@ -1,21 +1,19 @@
 using UnityEngine;
 
-public class GameLoopManager : Manager
+namespace MyGameLoop
 {
-    public UpdateHandler updateHandler;
-
-    public GameLoopManager()
+    internal class GameLoopManager : IGameLoopManager
     {
+        private readonly UpdateHandler _updateHandler;
 
-    }
+        public GameLoopManager(UpdateHandler updateHandler)
+        {
+            _updateHandler = updateHandler;
+        }
 
-    public void IStart()
-    {
-        
-    }
-
-    public void IUpdate()
-    {
-        updateHandler?.Update(Time.deltaTime);
+        public void IUpdate()
+        {
+            _updateHandler?.Update(Time.deltaTime);
+        }
     }
 }

@@ -1,60 +1,43 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using InputMainMenu;
 
-public sealed class InputManager : Manager
+namespace MyInput
 {
-    private IEventBus _bus;
-
-    /*private InputActionAsset _action;
-    private string _mapMainMenu;
-    private string _actionPlay;*/
-    private InputGroup _group;
-
-    private InputAction _aPlay;
-
-    public InputManager(IEventBus bus, InputGroup group)
+    internal sealed class InputManager : IInputManager
     {
-        _bus = bus;
-        _group = group;
+        private readonly IEventBus _bus;
+        private readonly InputGroup _group;
+        private readonly Dictionary<FactoryState.EState, IAction> _actions = new();
 
-        _bus.ISubscribe<MainMenuStateEnter>(_ => EnableMainMenu());
-
-        BindAction();
-        Callback();
-    }
-
-    private void BindAction()
-    {
-        if (_group.action == null) return;
-
-        var mapMainMenu = _group.action.FindActionMap(_group.mapMainMenu, throwIfNotFound: false);
-
-        if (mapMainMenu != null)
+        public InputManager(IEventBus bus, InputGroup group)
         {
-            _aPlay = mapMainMenu.FindAction(_group.actionPlay, false);
+            _bus = bus;
+            _group = group;
+
+            IAction action = new ActionMainMenuState(_bus, _group);
+            _actions[FactoryState.EState.eMainMenuState] = action;
+
+            BindAction();
+            CallbackAction();
+        }
+
+        private void BindAction()
+        {
+            if (_group.action == null) return;
+
+            foreach (var item in _actions.Values)
+            {
+                item.IBindAction();
+            }
+        }
+
+        private void CallbackAction()
+        {
+            foreach (var item in _actions.Values)
+            {
+                item.ICallbackAction();
+            }
         }
     }
-
-    private void Callback()
-    {
-        if (_aPlay != null)
-        {
-            _aPlay.started += _ => _bus.IPublish(new ActionPlayMainMenuState());
-        }
-    }
-
-    private void EnableMainMenu()
-    {
-        DisableAll();
-        _group.action.FindActionMap(_group.mapMainMenu, false)?.Enable();
-    }
-
-    private void DisableAll()
-    {
-        foreach (var map in _group.action.actionMaps) map.Disable();
-    }
-
-    public void IStart() {}
-
-    public void IUpdate() {}
 }
+

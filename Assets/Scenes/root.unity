@@ -153,8 +153,7 @@ MonoBehaviour:
     catalog: {fileID: 11400000, guid: a633915c2a1df954e869386b3ebdd60c, type: 2}
   inputManager:
     action: {fileID: -944628639613478452, guid: 3b060b21c5038b341b5de275b0d2c526, type: 3}
-    mapMainMenu: mainmenu_mapping
-    actionPlay: action_play
+    catalog: {fileID: 11400000, guid: c7c0dfbc81ff6db4f88819a5e01f34db, type: 2}
 --- !u!4 &243602782
 Transform:
   m_ObjectHideFlags: 0

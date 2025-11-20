@@ -1,32 +1,35 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public sealed class UIActionMainMenuState
+namespace UIMainMenu
 {
-    private readonly IEventBus _bus;
-    private readonly IUI _ui;
-
-    public UIActionMainMenuState(IEventBus bus, IUI ui)
+    internal sealed class UIActionMainMenuState
     {
-        _bus = bus;
-        _ui = ui;
-    }
+        private readonly IEventBus _bus;
+        private readonly IUIManager _ui;
 
-    public void OnMainMenuEnter()
-    {
-        _ui.IShow("ui-mainmenu");
+        public UIActionMainMenuState(IEventBus bus, IUIManager ui)
+        {
+            _bus = bus;
+            _ui = ui;
+        }
 
-        var btn = _ui.IGetComponentInUI<Button>("ui-mainmenu", "btn-play");
+        public void OnMainMenuEnter()
+        {
+            _ui.IShow("ui-mainmenu");
 
-        if (!btn) return;
+            var btn = _ui.IGetComponentInUI<Button>("ui-mainmenu", "btn-play");
 
-        btn.onClick.RemoveAllListeners();
-        btn.onClick.AddListener(() => _bus.IPublish(new SLevelRequest("gameplay_scene")));
-        btn.onClick.AddListener(() => _bus.IPublish(new RequestGameplayStateEnter()));
-    }
+            if (!btn) return;
 
-    public void OnMainMenuExit()
-    {
-        _ui.IHide("ui-mainmenu");
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => _bus.IPublish(new SLevelRequest("gameplay_scene")));
+            btn.onClick.AddListener(() => _bus.IPublish(new RequestGameplayStateEnter()));
+        }
+
+        public void OnMainMenuExit()
+        {
+            _ui.IHide("ui-mainmenu");
+        }
     }
 }

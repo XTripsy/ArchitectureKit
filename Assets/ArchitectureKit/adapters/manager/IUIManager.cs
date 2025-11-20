@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IUI
+public interface IUIManager
 {
     void IShow(string uiName); 
     void IHide(string uiName);

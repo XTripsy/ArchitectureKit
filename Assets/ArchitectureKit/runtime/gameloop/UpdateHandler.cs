@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 
-public sealed class UpdateHandler
+public sealed class UpdateHandler : IUpdateHandler
 {
     private readonly List<IUpdate> _lists = new();
 
-    public void Add(IUpdate t)
+    public void IAdd(IUpdate t)
     { 
         if (!_lists.Contains(t)) _lists.Add(t); 
     }
 
-    public void Remove(IUpdate t) 
+    public void IRemove(IUpdate t)
     { 
         _lists.Remove(t); 
     }

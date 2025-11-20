@@ -29,6 +29,4 @@ public sealed class GameState
             Change(p); 
         }
     }
-
-    public void Update(float dt) => _current?.IOnUpdate(dt);
 }
