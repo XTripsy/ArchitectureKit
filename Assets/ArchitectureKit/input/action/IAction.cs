@@ -2,7 +2,9 @@ using UnityEngine;
 
 public interface IAction
 {
+    void IEnable();
+    void IDisable();
     void IBindAction();
     void ICallbackAction();
-    int IGetIndexInputAction(FactoryState.EState state);
+    //int IGetIndexInputAction(string state);
 }

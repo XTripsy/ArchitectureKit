@@ -1,6 +1,3 @@
-public readonly struct RequestMainMenuStateEnter : IEvent { }
-public readonly struct RequestMainMenuStateExit : IEvent { }
-
 public readonly struct MainMenuStateEnter : IEvent { }
 public readonly struct MainMenuStateExit : IEvent { }
 

@@ -8,7 +8,7 @@ public sealed class InputController
     {
         _bus = bus;
 
-        InputActionMainMenuState temp = new InputActionMainMenuState(_bus);
-        _bus.ISubscribe<ActionPlayMainMenuState>(_ => temp.PlayMainMenu());
+        /*InputActionMainMenuState temp = new InputActionMainMenuState(_bus);
+        _bus.ISubscribe<ActionPlayMainMenuState>(_ => temp.PlayMainMenu());*/
     }
 }

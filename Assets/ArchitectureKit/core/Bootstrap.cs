@@ -3,6 +3,8 @@ using MyGameLoop;
 using MyInput;
 using MyLevel;
 using MyUI;
+using State_MainMenu;
+using State_Gameplay;
 
 public sealed class Bootstrap : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public sealed class Bootstrap : MonoBehaviour
     private void Awake()
     {
         IEventBus bus = new EventBus();
+        IStateRegistry stateRegistry = new StateRegistry();
         GameState gameState = new GameState();
 
         object[] objects =
@@ -28,26 +31,32 @@ public sealed class Bootstrap : MonoBehaviour
 
         context = new BootstrapContext(
             bus,
+            stateRegistry,
             gameState,
             objects
         );
 
         IInstaller<IBootstrapContext>[] installers =
         {
+            // core
             new GameStateInstaller(),
             new GameLoopInstaller(),
             new InputInstaller(),
             new LevelInstaller(),
-            new UIInstaller()
+            new UIInstaller(),
+            // state
+            new MainMenuStateInstaller(),
+            new GameplayStateInstaller()
         };
 
         foreach (var inst in installers)
             inst.Install(context);
+
     }
 
     private void Start()
     {
-        context.IGetGameState.Change(new MainMenuState(context.IGetBus));
+        context.IGetGameState.Change(context.IGetStateRegistry.ICreate("mainmenu_state"));
         context.IGetBus.IPublish(new SLevelLoad("mainmenu_scene"));
     }
 

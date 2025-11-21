@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: InputCatalog
   m_EditorClassIdentifier: 
   InputAction:
-  - nameMapping: mainmenu_mapping
+  - state: mainmenu_state
+    nameMapping: mainmenu_mapping
     actions:
     - action_play
+  - state: gameplay_state
+    nameMapping: gameplay_mapping
+    actions:
+    - action_click

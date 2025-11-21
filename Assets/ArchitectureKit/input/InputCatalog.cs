@@ -7,7 +7,7 @@ public class InputCatalog : ScriptableObject
     [System.Serializable]
     public struct Mapping
     {
-        public FactoryState.EState state;
+        public string state;
         public string nameMapping;
         public List<string> actions;
     }

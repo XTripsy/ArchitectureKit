@@ -33,7 +33,6 @@ namespace MyUI
 
         public void IHide(string name)
         {
-            Debug.LogError("MASUK");
             if (_inst.TryGetValue(name, out var go) && go) go.SetActive(false);
         }
 

@@ -15,12 +15,8 @@ namespace MyInput
         {
             IEventBus bus = installer.IGetBus;
             InputGroup group = installer.IGetGroup<InputGroup>();
-
-            IInputManager temp = new InputManager(bus, group);
+            IInputManager temp = new InputManager();
             installer.IRegister(temp);
-
-            IKeyFactory<FactoryState.EState, IState> factory_state = new FactoryState(bus);
-            InputController _inputController = new InputController(bus);
         }
     }
 }

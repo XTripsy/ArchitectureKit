@@ -29,6 +29,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "gameplay_mapping",
+            "id": "5e9f3398-bc37-4453-816d-069a9802211e",
+            "actions": [
+                {
+                    "name": "action_click",
+                    "type": "Button",
+                    "id": "0dd6cca5-2ae5-4a10-8bc9-d198e150bc23",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "58cd8a61-15b6-41e4-950b-9cc94517c6f6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "action_click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

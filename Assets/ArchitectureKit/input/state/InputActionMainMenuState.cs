@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public readonly struct ActionPlayMainMenuState : IEvent { }
 public sealed class InputActionMainMenuState
 {
@@ -13,6 +11,6 @@ public sealed class InputActionMainMenuState
     public void PlayMainMenu()
     {
         _bus.IPublish(new SLevelRequest("gameplay_scene"));
-        _bus.IPublish(new RequestGameplayStateEnter());
+        _bus.IPublish(new RequestStateEnter("gameplay_state"));
     }
 }

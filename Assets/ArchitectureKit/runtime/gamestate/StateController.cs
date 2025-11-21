@@ -4,15 +4,21 @@ public sealed class StateController
 {
     private readonly IEventBus _bus;
     private readonly GameState _state;
-    private readonly IKeyFactory<FactoryState.EState, IState> _factory;
+    private readonly IStateRegistry _registry;
 
-    public StateController(IEventBus bus, GameState state, IKeyFactory<FactoryState.EState, IState> factory)
+    public StateController(IEventBus bus, GameState state, IStateRegistry registry)
     {
         _bus = bus;
         _state = state;
-        _factory = factory;
+        _registry = registry;
 
-        _bus.ISubscribe<RequestMainMenuStateEnter>(_ => _state.Change(_factory.Create(FactoryState.EState.eMainMenuState)));
-        _bus.ISubscribe<RequestGameplayStateEnter>(_ => _state.Change(_factory.Create(FactoryState.EState.eGameplayState)));
+        _bus.ISubscribe<RequestStateEnter>(OnRequestStateEnter);
+    }
+
+    private void OnRequestStateEnter(RequestStateEnter e)
+    {
+        var next = _registry.ICreate(e.id);
+        if (next == null) return;
+        _state.Change(next);
     }
 }

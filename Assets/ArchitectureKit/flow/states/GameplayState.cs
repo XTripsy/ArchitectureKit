@@ -1,6 +1,3 @@
-public readonly struct RequestGameplayStateEnter : IEvent { }
-public readonly struct RequestGameplayStateExit : IEvent { }
-
 public readonly struct GameplayStateEnter : IEvent { }
 public readonly struct GameplayStateExit : IEvent { }
 

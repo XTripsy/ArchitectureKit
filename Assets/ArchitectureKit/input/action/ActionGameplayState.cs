@@ -1,33 +1,32 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine.InputSystem;
 
-namespace InputMainMenu
+namespace InputGameplay
 {
-    internal sealed class ActionMainMenuState : IAction
+    internal sealed class ActionGameplayState : IAction
     {
         private readonly IEventBus _bus;
         private readonly InputActionMap _inputActions;
         private readonly InputCatalog.Mapping _mapping;
 
-        private InputAction _aPlay;
+        private InputAction _aClick;
 
-        public ActionMainMenuState(IEventBus bus, InputActionMap inputActions, InputCatalog.Mapping mapping)
+        public ActionGameplayState(IEventBus bus, InputActionMap inputActions, InputCatalog.Mapping mapping)
         {
             _bus = bus;
             _mapping = mapping;
             _inputActions = inputActions;
 
-            _bus.ISubscribe<MainMenuStateEnter>(_ => IEnable());
+            _bus.ISubscribe<GameplayStateEnter>(_ => IEnable());
         }
 
         public void IBindAction()
         {
-            _aPlay = _inputActions.FindAction(_mapping.actions[0], false);
+            _aClick = _inputActions.FindAction(_mapping.actions[0], false);
         }
 
         public void ICallbackAction()
         {
-            _aPlay.started += _ => _bus.IPublish(new ActionPlayMainMenuState());
+            _aClick.started += _ => _bus.IPublish(new ActionClickGameplayState());
         }
 
         public void IDisable()

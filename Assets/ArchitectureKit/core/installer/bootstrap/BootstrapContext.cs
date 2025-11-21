@@ -5,13 +5,15 @@ public sealed class BootstrapContext : IBootstrapContext
 {
     private readonly IEventBus _bus;
     private IGameLoopManager _gameLoop;
-    private GameState _gameState;
+    private readonly IStateRegistry _stateRegistry;
+    private readonly GameState _gameState;
     private readonly Dictionary<Type, object> _services = new();
     private readonly Dictionary<Type, object> _groups = new();
 
-    public BootstrapContext(IEventBus bus, GameState gameState, params object[] groups)
+    public BootstrapContext(IEventBus bus, IStateRegistry stateRegistry, GameState gameState, params object[] groups)
     {
         _bus = bus;
+        _stateRegistry = stateRegistry;
         _gameState = gameState;
 
         foreach (var g in groups)
@@ -28,6 +30,9 @@ public sealed class BootstrapContext : IBootstrapContext
 
     public IGameLoopManager IGetGameLoop 
         => _gameLoop;
+
+    public IStateRegistry IGetStateRegistry
+        => _stateRegistry;
 
     public GameState IGetGameState 
         => _gameState;

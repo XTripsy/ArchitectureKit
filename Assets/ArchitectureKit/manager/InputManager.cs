@@ -1,43 +1,39 @@
 using System.Collections.Generic;
 using InputMainMenu;
+using UnityEngine;
 
 namespace MyInput
 {
     internal sealed class InputManager : IInputManager
     {
-        private readonly IEventBus _bus;
-        private readonly InputGroup _group;
-        private readonly Dictionary<FactoryState.EState, IAction> _actions = new();
+        private Dictionary<string, IAction> _actions = new();
 
-        public InputManager(IEventBus bus, InputGroup group)
+        public void IRegisterActionInput(string state, IAction action)
         {
-            _bus = bus;
-            _group = group;
-
-            IAction action = new ActionMainMenuState(_bus, _group);
-            _actions[FactoryState.EState.eMainMenuState] = action;
-
-            BindAction();
-            CallbackAction();
+            _actions[state] = action;
+            _actions[state]?.IBindAction();
+            _actions[state]?.ICallbackAction();
         }
 
-        private void BindAction()
+        public void IActiveActionInput(string mapping)
         {
-            if (_group.action == null) return;
-
             foreach (var item in _actions.Values)
-            {
-                item.IBindAction();
-            }
+                item.IDisable();
+
+            _actions[mapping]?.IEnable();
         }
 
-        private void CallbackAction()
+        public int IGetIndexCatalogInputAction(string state, InputCatalog group)
         {
-            foreach (var item in _actions.Values)
+            int id = 0;
+            foreach(var item in group.InputAction)
             {
-                item.ICallbackAction();
+                if (item.nameMapping == state)
+                    return id;
+                id++;
             }
+
+            return -1;
         }
     }
 }
-

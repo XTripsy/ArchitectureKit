@@ -24,7 +24,7 @@ namespace UIMainMenu
 
             btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(() => _bus.IPublish(new SLevelRequest("gameplay_scene")));
-            btn.onClick.AddListener(() => _bus.IPublish(new RequestGameplayStateEnter()));
+            btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("gameplay_state")));
         }
 
         public void OnMainMenuExit()
