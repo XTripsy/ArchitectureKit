@@ -24,6 +24,7 @@ namespace Namespace_InputGameplay
 
         public void PauseGameplay()
         {
+            Debug.LogError("Pause");
             _bus.IPublish(new RequestStateEnter("pause_state"));
         }
     }

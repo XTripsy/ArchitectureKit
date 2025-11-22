@@ -12,6 +12,8 @@ namespace Namespace_StateMainMenu
         public void Install(IBootstrapContext installer)
         {
             string name_state = "mainmenu_state";
+            string name_mapping = "mainmenu_mapping";
+
             IEventBus bus = installer.IGetBus;
             IStateRegistry state = installer.IGetStateRegistry;
             IInputManager input = installer.IResolve<IInputManager>();
@@ -20,11 +22,11 @@ namespace Namespace_StateMainMenu
             state.IRegister(name_state, new MainMenuState(bus));
 
             InputGroup group = installer.IGetGroup<InputGroup>();
-            int index = input.IGetIndexCatalogInputAction("mainmenu_mapping", group.catalog);
-            InputActionMap inputAction = group.action.FindActionMap("mainmenu_mapping", throwIfNotFound: false);
+            int index = input.IGetIndexCatalogInputAction(name_mapping, group.catalog);
+            InputActionMap inputAction = group.action.FindActionMap(name_mapping, throwIfNotFound: false);
             InputCatalog.Mapping mapping = group.catalog.InputAction[index];
             IAction action = new ActionMainMenuState(bus, inputAction, mapping);
-            input.IRegisterActionInput(name_state, action);
+            input.IRegisterActionInput(name_mapping, action);
 
             InputActionMainMenuState temp_input = new InputActionMainMenuState(bus);
             bus.ISubscribe<ActionPlayMainMenuState>(_ => temp_input.PlayMainMenu());
@@ -32,6 +34,8 @@ namespace Namespace_StateMainMenu
             UIActionMainMenuState temp_ui = new UIActionMainMenuState(bus, ui);
             bus.ISubscribe<MainMenuStateEnter>(_ => temp_ui.OnMainMenuEnter());
             bus.ISubscribe<MainMenuStateExit>(_ => temp_ui.OnMainMenuExit());
+
+            bus.ISubscribe<MainMenuStateEnter>(_ => input.IActiveActionInput(name_mapping));
         }
     }
 }
