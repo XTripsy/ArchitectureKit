@@ -18,3 +18,8 @@ MonoBehaviour:
     defaultHidden: 0
     overrideSorting: 0
     sortingOrder: 0
+  - name: ui-pause
+    prefab: {fileID: 2594661544674490353, guid: 49863d3d4a8f7b840be2a2ea6af50d0a, type: 3}
+    defaultHidden: 0
+    overrideSorting: 0
+    sortingOrder: 0

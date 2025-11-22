@@ -42,6 +42,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "action_pause",
+                    "type": "Button",
+                    "id": "eed53192-21c5-42e5-b9e4-762a367ce2b4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -53,6 +62,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "action_click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f12a3b4e-5792-4161-9d13-81c28005e2a4",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "action_pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "pause_mapping",
+            "id": "57541ae9-9c1e-4964-a798-5e1974d27022",
+            "actions": [
+                {
+                    "name": "action_resume",
+                    "type": "Button",
+                    "id": "be4676ac-fa1c-4b4d-b0a2-aa188383df2b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ae38d694-1038-43c5-a539-51e54acdca24",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "action_resume",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

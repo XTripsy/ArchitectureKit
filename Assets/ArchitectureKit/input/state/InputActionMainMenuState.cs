@@ -1,6 +1,6 @@
 using Namespace_Level;
 
-namespace Namespace_InputMainMenuEvent
+namespace Namespace_InputMainMenu_Event
 {
     internal readonly struct ActionPlayMainMenuState : IEvent { }
 }

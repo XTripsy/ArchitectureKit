@@ -6,6 +6,7 @@ using Namespace_UI;
 using Namespace_StateMainMenu;
 using Namespace_StateGameplay;
 using Namespace_GameState;
+using Namespace_StatePause;
 
 public sealed class Bootstrap : MonoBehaviour
 {
@@ -47,7 +48,8 @@ public sealed class Bootstrap : MonoBehaviour
             new UIInstaller(),
             // state
             new MainMenuStateInstaller(),
-            new GameplayStateInstaller()
+            new GameplayStateInstaller(),
+            new PauseStateInstaller()
         };
 
         foreach (var inst in installers)

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-namespace Namespace_InputGameplayEvent
+namespace Namespace_InputGameplay_Event
 {
     internal readonly struct ActionClickGameplayState : IEvent { }
+    internal readonly struct ActionPauseGameplayState : IEvent { }
 }
 
 namespace Namespace_InputGameplay
@@ -19,6 +20,11 @@ namespace Namespace_InputGameplay
         public void ClickGameplay()
         {
             Debug.LogError("CLICK");
+        }
+
+        public void PauseGameplay()
+        {
+            _bus.IPublish(new RequestStateEnter("pause_state"));
         }
     }
 }

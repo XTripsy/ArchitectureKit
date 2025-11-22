@@ -1,6 +1,6 @@
 using UnityEngine.InputSystem;
 using Namespace_StateMainMenu_Event;
-using Namespace_InputMainMenuEvent;
+using Namespace_InputMainMenu_Event;
 
 namespace Namespace_InputMainMenu
 {

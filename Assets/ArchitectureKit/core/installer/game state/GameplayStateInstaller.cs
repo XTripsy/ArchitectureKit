@@ -1,6 +1,6 @@
 ﻿using UnityEngine.InputSystem;
 using Namespace_InputGameplay;
-using Namespace_InputGameplayEvent;
+using Namespace_InputGameplay_Event;
 using Namespace_Input;
 
 namespace Namespace_StateGameplay
@@ -25,6 +25,7 @@ namespace Namespace_StateGameplay
 
             InputActionGameplayState temp = new InputActionGameplayState(bus);
             bus.ISubscribe<ActionClickGameplayState>(_ => temp.ClickGameplay());
+            bus.ISubscribe<ActionPauseGameplayState>(_ => temp.PauseGameplay());
         }
     }
 }

@@ -21,3 +21,8 @@ MonoBehaviour:
     nameMapping: gameplay_mapping
     actions:
     - action_click
+    - action_pause
+  - state: pause_state
+    nameMapping: pause_mapping
+    actions:
+    - action_resume
