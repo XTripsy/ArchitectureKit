@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Namespace_Level;
 
-namespace MyLevel
+namespace Namespace_Level
 {
     internal sealed class LevelManager : ILevelManager
     {
@@ -15,14 +16,14 @@ namespace MyLevel
         public LevelManager(IEventBus temp_bus)
         {
             _bus = temp_bus;
-            _bus.ISubscribe<SLevelRequest>(OnSwitch);
-            _bus.ISubscribe<SLevelLoad>(OnLoadLegacy);
+            _bus.ISubscribe<LevelRequest>(OnSwitch);
+            _bus.ISubscribe<LevelLoad>(OnLoadLegacy);
             IndexCurrentContentScenes();
         }
 
-        private void OnLoadLegacy(SLevelLoad e) => OnSwitch(new SLevelRequest(e.level));
+        private void OnLoadLegacy(LevelLoad e) => OnSwitch(new LevelRequest(e.level));
 
-        private async void OnSwitch(SLevelRequest e)
+        private async void OnSwitch(LevelRequest e)
         {
             if (_isLoading) return;
             _isLoading = true;
@@ -43,7 +44,7 @@ namespace MyLevel
 
             _contentScenes.Add(e.level);
 
-            _bus.IPublish(new SLevelLoad(e.level));
+            _bus.IPublish(new LevelLoad(e.level));
             _isLoading = false;
         }
 

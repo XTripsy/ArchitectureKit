@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using InputMainMenu;
-using UnityEngine;
 
-namespace MyInput
+namespace Namespace_Input
 {
     internal sealed class InputManager : IInputManager
     {

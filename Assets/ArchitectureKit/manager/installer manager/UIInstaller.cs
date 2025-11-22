@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MyUI
+namespace Namespace_UI
 {
     [System.Serializable]
     internal struct UIGroup

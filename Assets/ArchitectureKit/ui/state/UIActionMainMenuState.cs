@@ -1,7 +1,7 @@
 using UnityEngine.UI;
-using UnityEngine;
+using Namespace_Level;
 
-namespace UIMainMenu
+namespace Namespace_UIMainMenu
 {
     internal sealed class UIActionMainMenuState
     {
@@ -23,7 +23,7 @@ namespace UIMainMenu
             if (!btn) return;
 
             btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => _bus.IPublish(new SLevelRequest("gameplay_scene")));
+            btn.onClick.AddListener(() => _bus.IPublish(new LevelRequest("gameplay_scene")));
             btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("gameplay_state")));
         }
 

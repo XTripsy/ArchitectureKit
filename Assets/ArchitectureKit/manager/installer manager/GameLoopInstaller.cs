@@ -1,4 +1,4 @@
-﻿namespace MyGameLoop
+﻿namespace Namespace_GameLoop
 {
     [System.Serializable]
     internal struct GameLoopGroup
@@ -13,7 +13,7 @@
             IUpdateHandler updateHandler = new UpdateHandler();
             IGameLoopManager temp = new GameLoopManager(updateHandler as UpdateHandler);
             installer.IRegister(temp);
-            installer.ISetGameLoop(temp);
+            installer.IGetGameLoop = temp;
         }
     }
 }

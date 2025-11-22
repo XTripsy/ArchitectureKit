@@ -1,6 +1,8 @@
 ﻿using UnityEngine.InputSystem;
+using Namespace_StateGameplay_Event;
+using Namespace_InputGameplayEvent;
 
-namespace InputGameplay
+namespace Namespace_InputGameplay
 {
     internal sealed class ActionGameplayState : IAction
     {

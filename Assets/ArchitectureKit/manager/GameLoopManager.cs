@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MyGameLoop
+namespace Namespace_GameLoop
 {
     internal class GameLoopManager : IGameLoopManager
     {

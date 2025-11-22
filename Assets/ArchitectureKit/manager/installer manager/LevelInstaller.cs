@@ -1,4 +1,4 @@
-﻿namespace MyLevel
+﻿namespace Namespace_Level
 {
     [System.Serializable]
     internal struct LevelGroup

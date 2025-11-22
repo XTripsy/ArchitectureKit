@@ -1,22 +1,32 @@
-public readonly struct MainMenuStateEnter : IEvent { }
-public readonly struct MainMenuStateExit : IEvent { }
+using Namespace_StateMainMenu_Event;
 
-public sealed class MainMenuState : IState
+namespace Namespace_StateMainMenu_Event
 {
-    private readonly IEventBus _bus;
+    internal readonly struct MainMenuStateEnter : IEvent { }
+    internal readonly struct MainMenuStateExit : IEvent { }
 
-    public MainMenuState(IEventBus temp_bus)
-    {
-        _bus = temp_bus;
-    }
+}
 
-    public void IOnEnter()
-    {
-        _bus.IPublish(new MainMenuStateEnter());
-    }
+namespace Namespace_StateMainMenu
+{
 
-    public void IOnExit()
+    public sealed class MainMenuState : IState
     {
-        _bus.IPublish(new MainMenuStateExit());
+        private readonly IEventBus _bus;
+
+        public MainMenuState(IEventBus temp_bus)
+        {
+            _bus = temp_bus;
+        }
+
+        public void IOnEnter()
+        {
+            _bus.IPublish(new MainMenuStateEnter());
+        }
+
+        public void IOnExit()
+        {
+            _bus.IPublish(new MainMenuStateExit());
+        }
     }
 }

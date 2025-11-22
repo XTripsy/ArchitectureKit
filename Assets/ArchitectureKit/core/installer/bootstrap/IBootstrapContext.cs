@@ -1,8 +1,9 @@
-﻿public interface IBootstrapContext
+﻿using Namespace_GameState;
+
+public interface IBootstrapContext
 {
     IEventBus IGetBus { get; }
-    void ISetGameLoop(IGameLoopManager gameLoopManager);
-    IGameLoopManager IGetGameLoop { get; }
+    IGameLoopManager IGetGameLoop { get; set; }
     IStateRegistry IGetStateRegistry {  get; }
     GameState IGetGameState { get; }
     T IGetGroup<T>() where T : struct;

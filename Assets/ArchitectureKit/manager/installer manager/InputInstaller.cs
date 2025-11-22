@@ -1,6 +1,6 @@
 ﻿using UnityEngine.InputSystem;
 
-namespace MyInput
+namespace Namespace_Input
 {
     [System.Serializable]
     internal struct InputGroup

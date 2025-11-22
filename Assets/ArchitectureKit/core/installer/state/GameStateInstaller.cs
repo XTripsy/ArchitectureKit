@@ -1,4 +1,6 @@
-﻿public sealed class GameStateInstaller : IGameStateInstaller
+﻿using Namespace_GameState;
+
+public sealed class GameStateInstaller : IGameStateInstaller
 {
     public void Install(IBootstrapContext installer)
     {

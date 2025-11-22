@@ -1,22 +1,30 @@
-public readonly struct GameplayStateEnter : IEvent { }
-public readonly struct GameplayStateExit : IEvent { }
+using Namespace_StateGameplay_Event;
 
-public sealed class GameplayState : IState
+namespace Namespace_StateGameplay_Event
 {
-    private readonly IEventBus _bus;
+    internal readonly struct GameplayStateEnter : IEvent { }
+    internal readonly struct GameplayStateExit : IEvent { }
+}
 
-    public GameplayState(IEventBus temp_bus)
+namespace Namespace_StateGameplay
+{
+    public sealed class GameplayState : IState
     {
-        _bus = temp_bus;
-    }
+        private readonly IEventBus _bus;
 
-    public void IOnEnter()
-    {
-        _bus.IPublish(new GameplayStateEnter());
-    }
+        public GameplayState(IEventBus temp_bus)
+        {
+            _bus = temp_bus;
+        }
 
-    public void IOnExit()
-    {
-        _bus.IPublish(new GameplayStateExit());
+        public void IOnEnter()
+        {
+            _bus.IPublish(new GameplayStateEnter());
+        }
+
+        public void IOnExit()
+        {
+            _bus.IPublish(new GameplayStateExit());
+        }
     }
 }

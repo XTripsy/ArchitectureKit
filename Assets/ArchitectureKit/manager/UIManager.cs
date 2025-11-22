@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace MyUI
+namespace Namespace_UI
 {
     internal class UIManager : IUIManager
     {

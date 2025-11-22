@@ -1,16 +1,26 @@
-public readonly struct ActionPlayMainMenuState : IEvent { }
-public sealed class InputActionMainMenuState
+using Namespace_Level;
+
+namespace Namespace_InputMainMenuEvent
 {
-    IEventBus _bus;
+    internal readonly struct ActionPlayMainMenuState : IEvent { }
+}
 
-    public InputActionMainMenuState(IEventBus bus)
-    {
-        _bus = bus;
-    }
+namespace Namespace_InputMainMenu
+{
 
-    public void PlayMainMenu()
+    internal sealed class InputActionMainMenuState
     {
-        _bus.IPublish(new SLevelRequest("gameplay_scene"));
-        _bus.IPublish(new RequestStateEnter("gameplay_state"));
+        IEventBus _bus;
+
+        public InputActionMainMenuState(IEventBus bus)
+        {
+            _bus = bus;
+        }
+
+        public void PlayMainMenu()
+        {
+            _bus.IPublish(new LevelRequest("gameplay_scene"));
+            _bus.IPublish(new RequestStateEnter("gameplay_state"));
+        }
     }
 }

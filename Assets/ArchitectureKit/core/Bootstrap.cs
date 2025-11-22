@@ -1,10 +1,11 @@
 using UnityEngine;
-using MyGameLoop;
-using MyInput;
-using MyLevel;
-using MyUI;
-using State_MainMenu;
-using State_Gameplay;
+using Namespace_GameLoop;
+using Namespace_Input;
+using Namespace_Level;
+using Namespace_UI;
+using Namespace_StateMainMenu;
+using Namespace_StateGameplay;
+using Namespace_GameState;
 
 public sealed class Bootstrap : MonoBehaviour
 {
@@ -57,7 +58,7 @@ public sealed class Bootstrap : MonoBehaviour
     private void Start()
     {
         context.IGetGameState.Change(context.IGetStateRegistry.ICreate("mainmenu_state"));
-        context.IGetBus.IPublish(new SLevelLoad("mainmenu_scene"));
+        context.IGetBus.IPublish(new LevelLoad("mainmenu_scene"));
     }
 
     private void Update()

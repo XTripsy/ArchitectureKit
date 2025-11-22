@@ -1,24 +1,25 @@
-using UnityEngine;
-
-public sealed class StateController
+namespace Namespace_GameState
 {
-    private readonly IEventBus _bus;
-    private readonly GameState _state;
-    private readonly IStateRegistry _registry;
-
-    public StateController(IEventBus bus, GameState state, IStateRegistry registry)
+    internal sealed class StateController
     {
-        _bus = bus;
-        _state = state;
-        _registry = registry;
+        private readonly IEventBus _bus;
+        private readonly GameState _state;
+        private readonly IStateRegistry _registry;
 
-        _bus.ISubscribe<RequestStateEnter>(OnRequestStateEnter);
-    }
+        public StateController(IEventBus bus, GameState state, IStateRegistry registry)
+        {
+            _bus = bus;
+            _state = state;
+            _registry = registry;
 
-    private void OnRequestStateEnter(RequestStateEnter e)
-    {
-        var next = _registry.ICreate(e.id);
-        if (next == null) return;
-        _state.Change(next);
+            _bus.ISubscribe<RequestStateEnter>(OnRequestStateEnter);
+        }
+
+        private void OnRequestStateEnter(RequestStateEnter e)
+        {
+            var next = _registry.ICreate(e.id);
+            if (next == null) return;
+            _state.Change(next);
+        }
     }
 }

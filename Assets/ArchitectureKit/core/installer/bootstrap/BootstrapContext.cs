@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Namespace_GameState;
 
 public sealed class BootstrapContext : IBootstrapContext
 {
@@ -23,13 +24,11 @@ public sealed class BootstrapContext : IBootstrapContext
     public IEventBus IGetBus 
         => _bus;
 
-    public void ISetGameLoop(IGameLoopManager gameLoopManager)
+    public IGameLoopManager IGetGameLoop
     {
-        _gameLoop = gameLoopManager;
+        get => _gameLoop;
+        set => _gameLoop = value;
     }
-
-    public IGameLoopManager IGetGameLoop 
-        => _gameLoop;
 
     public IStateRegistry IGetStateRegistry
         => _stateRegistry;

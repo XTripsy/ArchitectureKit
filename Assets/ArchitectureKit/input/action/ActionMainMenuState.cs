@@ -1,7 +1,8 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
+using Namespace_StateMainMenu_Event;
+using Namespace_InputMainMenuEvent;
 
-namespace InputMainMenu
+namespace Namespace_InputMainMenu
 {
     internal sealed class ActionMainMenuState : IAction
     {

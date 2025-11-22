@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
 
-public readonly struct ActionClickGameplayState : IEvent { }
-public sealed class InputActionGameplayState
+namespace Namespace_InputGameplayEvent
 {
-    IEventBus _bus;
+    internal readonly struct ActionClickGameplayState : IEvent { }
+}
 
-    public InputActionGameplayState(IEventBus bus)
-    { 
-        _bus = bus; 
-    }
-
-    public void ClickGameplay()
+namespace Namespace_InputGameplay
+{
+    internal sealed class InputActionGameplayState
     {
-        Debug.LogError("CLICK");
+        IEventBus _bus;
+
+        public InputActionGameplayState(IEventBus bus)
+        {
+            _bus = bus;
+        }
+
+        public void ClickGameplay()
+        {
+            Debug.LogError("CLICK");
+        }
     }
 }

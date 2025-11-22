@@ -1,9 +1,9 @@
-﻿using InputGameplay;
-using InputMainMenu;
-using MyInput;
-using UnityEngine.InputSystem;
+﻿using UnityEngine.InputSystem;
+using Namespace_InputGameplay;
+using Namespace_InputGameplayEvent;
+using Namespace_Input;
 
-namespace State_Gameplay
+namespace Namespace_StateGameplay
 {
     internal sealed class GameplayStateInstaller : IInstaller<IBootstrapContext>
     {

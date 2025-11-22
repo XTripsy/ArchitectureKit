@@ -1,10 +1,11 @@
-﻿using InputMainMenu;
-using MyInput;
-using UIMainMenu;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine.InputSystem;
+using Namespace_InputMainMenu;
+using Namespace_InputMainMenuEvent;
+using Namespace_UIMainMenu;
+using Namespace_StateMainMenu_Event;
+using Namespace_Input;
 
-namespace State_MainMenu
+namespace Namespace_StateMainMenu
 {
     internal sealed class MainMenuStateInstaller : IInstaller<IBootstrapContext>
     {
