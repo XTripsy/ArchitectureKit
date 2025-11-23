@@ -1,6 +1,7 @@
-﻿using UnityEngine.InputSystem;
+﻿using Namespace_InputGameplay_Event;
 using Namespace_StateGameplay_Event;
-using Namespace_InputGameplay_Event;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 namespace Namespace_InputGameplay
 {
@@ -10,8 +11,7 @@ namespace Namespace_InputGameplay
         private readonly InputActionMap _inputActions;
         private readonly InputCatalog.Mapping _mapping;
 
-        private InputAction _aClick;
-        private InputAction _aPause;
+        private Dictionary<string, InputAction> _aActions = new();
 
         public ActionGameplayState(IEventBus bus, InputActionMap inputActions, InputCatalog.Mapping mapping)
         {
@@ -24,14 +24,14 @@ namespace Namespace_InputGameplay
 
         public void IBindAction()
         {
-            _aClick = _inputActions.FindAction(_mapping.actions[0], false);
-            _aPause = _inputActions.FindAction(_mapping.actions[1], false);
+            foreach (var item in _mapping.actions)
+                _aActions[item] = _inputActions.FindAction(item, false);
         }
 
         public void ICallbackAction()
         {
-            _aClick.started += _ => _bus.IPublish(new ActionClickGameplayState());
-            _aPause.started += _ => _bus.IPublish(new ActionPauseGameplayState());
+            _aActions["action_click"].started += _ => _bus.IPublish(new ActionClickGameplayState());
+            _aActions["action_pause"].started += _ => _bus.IPublish(new ActionPauseGameplayState());
         }
 
         public void IDisable()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine.InputSystem;
+using System.Collections.Generic;
 using Namespace_StatePause_Event;
 using Namespace_InputPause_Event;
 
@@ -10,7 +11,7 @@ namespace Namespace_InputPause
         private readonly InputActionMap _inputActions;
         private readonly InputCatalog.Mapping _mapping;
 
-        private InputAction _aResume;
+        private Dictionary<string, InputAction> _aActions = new();
 
         public ActionPauseState(IEventBus bus, InputActionMap inputActions, InputCatalog.Mapping mapping)
         {
@@ -23,12 +24,13 @@ namespace Namespace_InputPause
 
         public void IBindAction()
         {
-            _aResume = _inputActions.FindAction(_mapping.actions[0], false);
+            foreach (var item in _mapping.actions)
+                _aActions[item] = _inputActions.FindAction(item, false);
         }
 
         public void ICallbackAction()
         {
-            _aResume.started += _ => _bus.IPublish(new ActionResumePauseState());
+            _aActions["action_resume"].started += _ => _bus.IPublish(new ActionResumePauseState());
         }
 
         public void IDisable()
