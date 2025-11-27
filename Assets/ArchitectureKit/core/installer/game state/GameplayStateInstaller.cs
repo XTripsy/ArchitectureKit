@@ -1,8 +1,11 @@
-﻿using UnityEngine.InputSystem;
+﻿using Namespace_GameLoop;
+using Namespace_Input;
 using Namespace_InputGameplay;
 using Namespace_InputGameplay_Event;
-using Namespace_Input;
 using Namespace_StateGameplay_Event;
+using Namespace_StateMainMenu;
+using Namespace_StateMainMenu_Event;
+using UnityEngine.InputSystem;
 
 namespace Namespace_StateGameplay
 {
@@ -16,6 +19,7 @@ namespace Namespace_StateGameplay
             IEventBus bus = installer.IGetBus;
             IStateRegistry state = installer.IGetStateRegistry;
             IInputManager input = installer.IResolve<IInputManager>();
+            IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
 
             state.IRegister(name_state, new GameplayState(bus));
 
@@ -31,6 +35,11 @@ namespace Namespace_StateGameplay
             bus.ISubscribe<ActionPauseGameplayState>(_ => temp.PauseGameplay());
 
             bus.ISubscribe<GameplayStateEnter>(_ => input.IActiveActionInput(name_mapping));
+
+            IUpdateManager test_manager = new PlayerStateManager();
+            gameLoopManager.IRegister("update_playerstate_manager", test_manager);
+            bus.ISubscribe<GameplayStateEnter>(_ => gameLoopManager.IActivate("update_playerstate_manager"));
+            bus.ISubscribe<GameplayStateExit>(_ => gameLoopManager.IDeActivate("update_playerstate_manager"));
         }
     }
 }

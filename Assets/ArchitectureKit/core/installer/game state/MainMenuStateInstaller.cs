@@ -18,6 +18,7 @@ namespace Namespace_StateMainMenu
             IStateRegistry state = installer.IGetStateRegistry;
             IInputManager input = installer.IResolve<IInputManager>();
             IUIManager ui = installer.IResolve<IUIManager>();
+            IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
 
             state.IRegister(name_state, new MainMenuState(bus));
 
@@ -36,6 +37,11 @@ namespace Namespace_StateMainMenu
             bus.ISubscribe<MainMenuStateExit>(_ => temp_ui.OnMainMenuExit());
 
             bus.ISubscribe<MainMenuStateEnter>(_ => input.IActiveActionInput(name_mapping));
+
+            IUpdateManager test_manager = new MainMenuStateUpdateManager();
+            gameLoopManager.IRegister("update_mainmenu_manager", test_manager);
+            bus.ISubscribe<MainMenuStateEnter>(_ => gameLoopManager.IActivate("update_mainmenu_manager"));
+            bus.ISubscribe<MainMenuStateExit>(_ => gameLoopManager.IDeActivate("update_mainmenu_manager"));
         }
     }
 }

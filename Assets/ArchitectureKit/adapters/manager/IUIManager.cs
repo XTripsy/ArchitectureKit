@@ -2,8 +2,8 @@ using UnityEngine;
 
 public interface IUIManager
 {
-    void IShow(string uiName); 
-    void IHide(string uiName);
-    GameObject IGet(string uiName);
-    T IGetComponentInUI<T>(string uiName, string childPath) where T : Component;
+    void IShow(string name); 
+    void IHide(string name);
+    GameObject IGet(string name);
+    T IGetComponentInUI<T>(string name, string childPath) where T : Component;
 }

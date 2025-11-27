@@ -1,0 +1,1 @@
+﻿public interface IObjectInstaller : IInstaller<IBootstrapContext> {}

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Namespace_UI
 {
-    internal class UIManager : IUIManager
+    internal sealed class UIManager : IUIManager
     {
         private UIGroup _group;
         private IFactory<FactoryComponent.Args, GameObject> _factory;
@@ -79,7 +79,7 @@ namespace Namespace_UI
             }
         }
 
-        private static Transform _FindChild(Transform root, string path)
+        private Transform _FindChild(Transform root, string path)
         {
             var cur = root;
             foreach (var p in path.Split('/'))

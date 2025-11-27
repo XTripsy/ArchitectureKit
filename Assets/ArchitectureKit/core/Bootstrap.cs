@@ -7,15 +7,18 @@ using Namespace_StateMainMenu;
 using Namespace_StateGameplay;
 using Namespace_GameState;
 using Namespace_StatePause;
+using Namespace_Object;
 
 public sealed class Bootstrap : MonoBehaviour
 {
-    [SerializeField] private GameLoopGroup gameLoopManager;
-    [SerializeField] private UIGroup uiManager;
-    [SerializeField] private LevelGroup levelManager;
-    [SerializeField] private InputGroup inputManager;
+    [SerializeField] private GameLoopGroup _gameLoopManager;
+    [SerializeField] private UIGroup _uiManager;
+    [SerializeField] private LevelGroup _levelManager;
+    [SerializeField] private InputGroup _inputManager;
+    [SerializeField] private ObjectGroup _objectManager;
 
-    private IBootstrapContext context;
+    private IBootstrapContext _context;
+    private IGameLoopManager _interface_gameLoopManager;
 
     private void Awake()
     {
@@ -25,13 +28,14 @@ public sealed class Bootstrap : MonoBehaviour
 
         object[] objects =
         {
-            gameLoopManager,
-            uiManager,
-            levelManager,
-            inputManager
+            _gameLoopManager,
+            _uiManager,
+            _levelManager,
+            _inputManager,
+            _objectManager
         };
 
-        context = new BootstrapContext(
+        _context = new BootstrapContext(
             bus,
             stateRegistry,
             gameState,
@@ -46,6 +50,7 @@ public sealed class Bootstrap : MonoBehaviour
             new InputInstaller(),
             new LevelInstaller(),
             new UIInstaller(),
+            new ObjectInstaller(),
             // state
             new MainMenuStateInstaller(),
             new GameplayStateInstaller(),
@@ -53,18 +58,19 @@ public sealed class Bootstrap : MonoBehaviour
         };
 
         foreach (var inst in installers)
-            inst.Install(context);
+            inst.Install(_context);
 
+        _interface_gameLoopManager = _context.IGetGameLoop;
     }
 
     private void Start()
     {
-        context.IGetGameState.Change(context.IGetStateRegistry.ICreate("mainmenu_state"));
-        context.IGetBus.IPublish(new LevelLoad("mainmenu_scene"));
+        _context.IGetGameState.Change(_context.IGetStateRegistry.ICreate("mainmenu_state"));
+        _context.IGetBus.IPublish(new LevelLoad("mainmenu_scene"));
     }
 
     private void Update()
     {
-        context.IGetGameLoop.IUpdate();
+        _interface_gameLoopManager.IUpdate();
     }
 }
