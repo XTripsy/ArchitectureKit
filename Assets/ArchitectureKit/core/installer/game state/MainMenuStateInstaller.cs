@@ -22,6 +22,13 @@ namespace Namespace_StateMainMenu
 
             state.IRegister(name_state, new MainMenuState(bus));
 
+            _InstallInput(installer, bus, input, name_mapping);
+            _InstallInputAction(bus);
+            _InstallUI(bus, ui);
+        }
+
+        private void _InstallInput(IBootstrapContext installer, IEventBus bus, IInputManager input, string name_mapping)
+        {
             InputGroup group = installer.IGetGroup<InputGroup>();
             int index = input.IGetIndexCatalogInputAction(name_mapping, group.catalog);
             InputActionMap inputAction = group.action.FindActionMap(name_mapping, throwIfNotFound: false);
@@ -29,19 +36,20 @@ namespace Namespace_StateMainMenu
             IAction action = new ActionMainMenuState(bus, inputAction, mapping);
             input.IRegisterActionInput(name_mapping, action);
 
+            bus.ISubscribe<MainMenuStateEnter>(_ => input.IActiveActionInput(name_mapping));
+        }
+
+        private void _InstallInputAction(IEventBus bus)
+        {
             InputActionMainMenuState temp_input = new InputActionMainMenuState(bus);
             bus.ISubscribe<ActionPlayMainMenuState>(_ => temp_input.PlayMainMenu());
+        }
 
+        private void _InstallUI(IEventBus bus, IUIManager ui)
+        {
             UIActionMainMenuState temp_ui = new UIActionMainMenuState(bus, ui);
             bus.ISubscribe<MainMenuStateEnter>(_ => temp_ui.OnMainMenuEnter());
             bus.ISubscribe<MainMenuStateExit>(_ => temp_ui.OnMainMenuExit());
-
-            bus.ISubscribe<MainMenuStateEnter>(_ => input.IActiveActionInput(name_mapping));
-
-            IUpdateManager test_manager = new MainMenuStateUpdateManager();
-            gameLoopManager.IRegister("update_mainmenu_manager", test_manager);
-            bus.ISubscribe<MainMenuStateEnter>(_ => gameLoopManager.IActivate("update_mainmenu_manager"));
-            bus.ISubscribe<MainMenuStateExit>(_ => gameLoopManager.IDeActivate("update_mainmenu_manager"));
         }
     }
 }

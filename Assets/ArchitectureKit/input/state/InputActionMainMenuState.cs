@@ -19,8 +19,8 @@ namespace Namespace_InputMainMenu
 
         public void PlayMainMenu()
         {
-            _bus.IPublish(new LevelRequest("gameplay_scene"));
-            _bus.IPublish(new RequestStateEnter("gameplay_state"));
+            _bus.IPublish(new LevelRequest("lobby_scene"));
+            _bus.IPublish(new RequestStateEnter("lobby_state"));
         }
     }
 }

@@ -4,6 +4,7 @@ using Namespace_Input;
 using Namespace_Level;
 using Namespace_UI;
 using Namespace_StateMainMenu;
+using Namespace_StateLobby;
 using Namespace_StateGameplay;
 using Namespace_GameState;
 using Namespace_StatePause;
@@ -53,6 +54,7 @@ public sealed class Bootstrap : MonoBehaviour
             new ObjectInstaller(),
             // state
             new MainMenuStateInstaller(),
+            new LobbyStateInstaller(),
             new GameplayStateInstaller(),
             new PauseStateInstaller()
         };

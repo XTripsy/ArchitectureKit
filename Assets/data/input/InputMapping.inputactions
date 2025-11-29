@@ -105,6 +105,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "lobby_mapping",
+            "id": "9b7673a0-254c-402a-b04a-3b3b8d9c8f05",
+            "actions": [
+                {
+                    "name": "action_join",
+                    "type": "Button",
+                    "id": "fca1cad6-4803-4cb3-9c34-20b88097321d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a11f679d-c7ef-4b76-b430-ac1d196e4b36",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "action_join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

@@ -23,8 +23,8 @@ namespace Namespace_UIMainMenu
             if (!btn) return;
 
             btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => _bus.IPublish(new LevelRequest("gameplay_scene")));
-            btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("gameplay_state")));
+            btn.onClick.AddListener(() => _bus.IPublish(new LevelRequest("lobby_scene")));
+            btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("lobby_state")));
         }
 
         public void OnMainMenuExit()

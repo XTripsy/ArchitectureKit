@@ -26,3 +26,7 @@ MonoBehaviour:
     nameMapping: pause_mapping
     actions:
     - action_resume
+  - state: lobby_state
+    nameMapping: lobby_mapping
+    actions:
+    - action_join

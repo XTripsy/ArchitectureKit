@@ -50,15 +50,21 @@ namespace Namespace_Level
 
         private IEnumerable<string> FindUnloadTargets(string except)
         {
-            int count = SceneManager.sceneCount;
-            for (int i = 0; i < count; i++)
+            var currentScenes = new List<Scene>();
+            for (int i = 0; i < SceneManager.sceneCount; i++)
             {
-                var sc = SceneManager.GetSceneAt(i);
+                currentScenes.Add(SceneManager.GetSceneAt(i));
+            }
+
+            foreach (var sc in currentScenes)
+            {
                 if (!sc.isLoaded) continue;
+
                 var name = sc.name;
+
                 if (name == except) continue;
                 if (!string.IsNullOrEmpty(_persistentSceneName) && name == _persistentSceneName) continue;
-                if (string.IsNullOrEmpty(_persistentSceneName) && i == 0) continue;
+                if (string.IsNullOrEmpty(_persistentSceneName) && currentScenes.IndexOf(sc) == 0) continue;
 
                 yield return name;
             }

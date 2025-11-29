@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
-using Namespace_InputGameplay_Event;
-using Namespace_StateGameplay_Event;
+using Namespace_StateLobby_Event;
+using Namespace_InputLobby_Event;
 
-namespace Namespace_InputGameplay
+namespace Namespace_InputLobby
 {
-    internal sealed class ActionGameplayState : IAction
+    internal sealed class ActionLobbyState : IAction
     {
         private readonly IEventBus _bus;
         private readonly InputActionMap _inputActions;
@@ -14,13 +14,13 @@ namespace Namespace_InputGameplay
 
         private Dictionary<string, InputAction> _aActions = new();
 
-        public ActionGameplayState(IEventBus bus, InputActionMap inputActions, InputCatalog.Mapping mapping)
+        public ActionLobbyState(IEventBus bus, InputActionMap inputActions, InputCatalog.Mapping mapping)
         {
             _bus = bus;
             _mapping = mapping;
             _inputActions = inputActions;
 
-            _bus.ISubscribe<GameplayStateEnter>(_ => IEnable());
+            _bus.ISubscribe<LobbyStateEnter>(_ => IEnable());
         }
 
         public void IBindAction()
@@ -31,8 +31,7 @@ namespace Namespace_InputGameplay
 
         public void ICallbackAction()
         {
-            _aActions["action_click"].started += _ => _bus.IPublish(new ActionClickGameplayState());
-            _aActions["action_pause"].started += _ => _bus.IPublish(new ActionPauseGameplayState());
+            _aActions["action_join"].started += _ => _bus.IPublish(new ActionJoinLobbyState());
         }
 
         public void IDisable()
