@@ -1,0 +1,1 @@
+public interface INetworkingInstaller : IInstaller<IBootstrapContext> { }

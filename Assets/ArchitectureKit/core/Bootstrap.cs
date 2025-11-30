@@ -1,3 +1,4 @@
+using PurrNet;
 using UnityEngine;
 using Namespace_GameLoop;
 using Namespace_Input;
@@ -9,6 +10,8 @@ using Namespace_StateGameplay;
 using Namespace_GameState;
 using Namespace_StatePause;
 using Namespace_Object;
+using Namespace_Networking;
+using Unity.VisualScripting;
 
 public sealed class Bootstrap : MonoBehaviour
 {
@@ -17,6 +20,7 @@ public sealed class Bootstrap : MonoBehaviour
     [SerializeField] private LevelGroup _levelManager;
     [SerializeField] private InputGroup _inputManager;
     [SerializeField] private ObjectGroup _objectManager;
+    [SerializeField] private NetworkManager _networkManager;
 
     private IBootstrapContext _context;
     private IGameLoopManager _interface_gameLoopManager;
