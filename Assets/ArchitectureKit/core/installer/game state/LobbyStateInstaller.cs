@@ -57,7 +57,7 @@ namespace Namespace_StateLobby
 
         private void _InstallObject(IEventBus bus, IGameLoopManager gameLoopManager, IObjectManager objectManager)
         {
-            ActionPlayer temp_player = new ActionPlayer(bus, gameLoopManager, objectManager);
+            var temp_player = new ActionPlayer(bus, gameLoopManager, objectManager);
         }
     }
 }

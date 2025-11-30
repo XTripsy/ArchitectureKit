@@ -22,11 +22,6 @@ namespace Namespace_StateGameplay
 
             _InstallInput(installer, bus, input, name_mapping);
             _InstallInputAction(bus);
-
-            IUpdateManager test_manager = new PlayerStateManager();
-            gameLoopManager.IRegister("update_playerstate_manager", test_manager);
-            bus.ISubscribe<GameplayStateEnter>(_ => gameLoopManager.IActivate("update_playerstate_manager"));
-            bus.ISubscribe<GameplayStateExit>(_ => gameLoopManager.IDeActivate("update_playerstate_manager"));
         }
 
         private void _InstallInput(IBootstrapContext installer, IEventBus bus, IInputManager input, string name_mapping)

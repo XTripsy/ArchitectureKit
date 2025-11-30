@@ -1,4 +1,5 @@
 ﻿using Namespace_ActionSpawnPlayer_Event;
+using Namespace_PlayerState;
 
 namespace Namespace_ActionSpawnPlayer_Event
 {
@@ -21,21 +22,19 @@ namespace Namespace_ActionSpawnPlayer
             _objectManager = objectManager;
 
             _bus.ISubscribe<ActionSpawnPlayer>(_ => _SpawnPlayer());
-            _bus.ISubscribe<ActionDeSpawnPlayer>(_ => _DeSpawnPlayer());
+            //_bus.ISubscribe<ActionDeSpawnPlayer>(_ => _DeSpawnPlayer());
         }
 
         private void _SpawnPlayer()
         {
             _objectManager.IActive("player");
-
-            IUpdateManager player_state = new PlayerStateManager();
-            _gameLoopManager.IRegister("player_state", player_state);
-            _gameLoopManager.IActivate("player_state");
+            //_gameLoopManager.IActivate("player_state_manager");
         }
 
         private void _DeSpawnPlayer()
         {
-            _gameLoopManager.IDeActivate("player_state");
+            _objectManager.IDeActive("player");
+            //_gameLoopManager.IDeActivate("player_state_manager");
         }
     }
 }
