@@ -3,6 +3,7 @@ using Namespace_PlayerController;
 using Namespace_PlayerModulMovement;
 using Namespace_StatePause_Event;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Namespace_PlayerState
 {
@@ -48,7 +49,8 @@ namespace Namespace_PlayerState
 
         private void _InstallPlayerController(int id, IEventBus bus, IPlayerStateMachine player_state, Transform obj)
         {
-            var player_controller = new PlayerController(id, obj, bus, player_state);
+            var playerInput = obj.GetComponent<PlayerInput>();
+            var player_controller = new PlayerController(id, playerInput, bus, player_state);
         }
 
         private void _InstallPlayerStateMachine(IPlayerStateManager stateManager, string name, IPlayerStateMachine playerState)

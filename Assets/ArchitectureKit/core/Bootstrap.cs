@@ -10,6 +10,7 @@ using Namespace_GameState;
 using Namespace_StatePause;
 using Namespace_Object;
 using Namespace_PlayerState;
+using Namespace_Trigger;
 
 public sealed class Bootstrap : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public sealed class Bootstrap : MonoBehaviour
             new LevelInstaller(),
             new UIInstaller(),
             new ObjectInstaller(),
+            new TriggerInstaller(),
             // state
             new MainMenuStateInstaller(),
             new LobbyStateInstaller(),

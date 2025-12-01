@@ -1,0 +1,1 @@
+﻿public interface ITriggerInstaller : IInstaller<IBootstrapContext> {}

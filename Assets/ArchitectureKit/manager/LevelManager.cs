@@ -46,6 +46,9 @@ namespace Namespace_Level
 
             _bus.IPublish(new LevelLoad(e.level));
             _isLoading = false;
+
+            GameObject[] root = newScene.GetRootGameObjects();
+            _bus.IPublish(new TriggerRegister(root));
         }
 
         private IEnumerable<string> FindUnloadTargets(string except)

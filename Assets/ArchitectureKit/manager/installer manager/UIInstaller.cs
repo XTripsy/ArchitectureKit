@@ -19,8 +19,6 @@ namespace Namespace_UI
 
             IUIManager temp = new UIManager(group, factory_component);
             installer.IRegister(temp);
-
-            //UIController _uiController = new UIController(bus, temp);
         }
     }
 }

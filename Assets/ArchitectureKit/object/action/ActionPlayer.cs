@@ -1,4 +1,5 @@
 ﻿using Namespace_ActionSpawnPlayer_Event;
+using Namespace_ExitLobby_Event;
 using Namespace_PlayerState;
 
 namespace Namespace_ActionSpawnPlayer_Event
@@ -22,6 +23,7 @@ namespace Namespace_ActionSpawnPlayer
             _objectManager = objectManager;
 
             _bus.ISubscribe<ActionSpawnPlayer>(_ => _SpawnPlayer());
+            _bus.ISubscribe<ExitLobbyPlayer>(_ => _DeSpawnPlayer());
             //_bus.ISubscribe<ActionDeSpawnPlayer>(_ => _DeSpawnPlayer());
         }
 
