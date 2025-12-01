@@ -50,7 +50,7 @@ namespace Namespace_StateLobby
 
         private void _InstallUI(IEventBus bus, IUIManager ui)
         {
-            UIActionLobbyState temp = new UIActionLobbyState(ui);
+            UIActionLobbyState temp = new UIActionLobbyState(bus, ui);
             bus.ISubscribe<LobbyStateEnter>(_ => temp.OnLobbyEnter());
             bus.ISubscribe<LobbyStateExit>(_ => temp.OnLobbyExit());
         }

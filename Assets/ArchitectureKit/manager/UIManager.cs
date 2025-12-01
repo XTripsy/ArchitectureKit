@@ -36,6 +36,15 @@ namespace Namespace_UI
 
         public GameObject IGet(string name) => _Ensure(name);
 
+        public IEnumerable<T> IGetAllComponentInUI<T>(string uiName) where T : Component
+        {
+            var root = IGet(uiName);
+            if (!root) yield break;
+
+            foreach (var comp in root.GetComponentsInChildren<T>(true))
+                yield return comp;
+        }
+
         public T IGetComponentInUI<T>(string name, string path) where T : Component
         {
             var key = (name, path);

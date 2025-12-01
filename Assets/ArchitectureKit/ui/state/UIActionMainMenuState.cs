@@ -1,4 +1,5 @@
 using UnityEngine.UI;
+using UnityEngine;
 using Namespace_Level;
 
 namespace Namespace_UIMainMenu
@@ -18,13 +19,31 @@ namespace Namespace_UIMainMenu
         {
             _ui.IShow("ui-mainmenu");
 
-            var btn = _ui.IGetComponentInUI<Button>("ui-mainmenu", "btn-play");
+            var buttons = _ui.IGetAllComponentInUI<Button>("ui-mainmenu");
 
-            if (!btn) return;
-
-            btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => _bus.IPublish(new LevelRequest("lobby_scene")));
-            btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("lobby_state")));
+            foreach (var btn in buttons)
+            {
+                btn.onClick.RemoveAllListeners();
+                switch (btn.gameObject.name)
+                {
+                    case "btn-create":
+                        btn.onClick.AddListener(() => _bus.IPublish(new LevelRequest("lobby_scene")));
+                        btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("lobby_state")));
+                        break;
+                    case "btn-browse":
+                        btn.onClick.AddListener(() =>
+                        {
+                            Debug.Log("<color=yellow> BROWSE");
+                        });
+                        break;
+                    case "btn-join":
+                        btn.onClick.AddListener(() =>
+                        {
+                            Debug.Log("<color=blue> JOIN");
+                        });
+                        break;
+                }
+            }
         }
 
         public void OnMainMenuExit()
