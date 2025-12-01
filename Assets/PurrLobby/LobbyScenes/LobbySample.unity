@@ -685,7 +685,7 @@ MonoBehaviour:
   OnViewHide:
     m_PersistentCalls:
       m_Calls: []
-  lobbyManager: {fileID: 1097043115}
+  lobbyManager: {fileID: 5483641474624712911}
   lobbyList: {fileID: 2086255125}
 --- !u!225 &267031315
 CanvasGroup:
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1097043115}
+      - m_Target: {fileID: 5483641474624712911}
         m_TargetAssemblyTypeName: PurrLobby.LobbyManager, PurrNetLobbySetup
         m_MethodName: ToggleLocalReady
         m_Mode: 1
@@ -1537,7 +1537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd422646f801404bb568665b636fa9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyManager: {fileID: 1097043115}
+  lobbyManager: {fileID: 5483641474624712911}
   friendEntry: {fileID: 1508615511672977223, guid: 701273401acb61842af8f9ea5bd0871b, type: 3}
   content: {fileID: 477276360}
   filter: 0
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1097043115}
+      - m_Target: {fileID: 5483641474624712911}
         m_TargetAssemblyTypeName: PurrLobby.LobbyManager, PurrNetLobbySetup
         m_MethodName: CreateRoom
         m_Mode: 1
@@ -2071,7 +2071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomIdInput: {fileID: 188598338}
-  lobbyManager: {fileID: 1097043115}
+  lobbyManager: {fileID: 5483641474624712911}
   onStartJoin:
     m_PersistentCalls:
       m_Calls:
@@ -2339,17 +2339,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073503849}
   m_CullTransparentMesh: 1
---- !u!114 &1097043115 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-  m_PrefabInstance: {fileID: 7498022073850433444}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 018749c98c25d47418932e090d8f8fbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1101296062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3462,7 +3451,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   codeButton: {fileID: 1724632833}
-  lobbyManager: {fileID: 1097043115}
+  lobbyManager: {fileID: 5483641474624712911}
 --- !u!225 &1295349078
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3822,7 +3811,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1097043115}
+      - m_Target: {fileID: 5483641474624712911}
         m_TargetAssemblyTypeName: PurrLobby.LobbyManager, PurrNetLobbySetup
         m_MethodName: LeaveLobby
         m_Mode: 1
@@ -5981,7 +5970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 550dfcb93143f514c910a297ab2db28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyManager: {fileID: 1097043115}
+  lobbyManager: {fileID: 5483641474624712911}
   lobbyEntryPrefab: {fileID: 8034784290185517773, guid: e3910e62b256a2a46864060a999dd67e, type: 3}
   content: {fileID: 1771840637}
 --- !u!1 &2108945442
@@ -6185,101 +6174,246 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118015730}
   m_CullTransparentMesh: 1
---- !u!1001 &7498022073850433444
-PrefabInstance:
+--- !u!114 &1101657432332615104
+MonoBehaviour:
   m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382062159983868910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffc99f43c7c4224b8dccb9831f662a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lobbyManager: {fileID: 5483641474624712911}
+  nextScene: lobby_scene
+--- !u!114 &2750407548883456674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382062159983868910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15156e7f57bff964485891eba8344bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lobbyType: 2
+  maxLobbiesToFind: 10
+  handleSteamInit: 1
+--- !u!1 &4382062159983868910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6512273080954573158}
+  - component: {fileID: 5483641474624712911}
+  - component: {fileID: 2750407548883456674}
+  - component: {fileID: 1101657432332615104}
+  - component: {fileID: 6512273080954573159}
+  m_Layer: 0
+  m_Name: LobbyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &5483641474624712911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382062159983868910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018749c98c25d47418932e090d8f8fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentProvider: {fileID: 2750407548883456674}
+  createRoomArgs:
+    maxPlayers: 4
+    roomProperties:
+      keys:
+      - PurrNet
+      values:
+      - IsTheBest
+      stringKeys: []
+      stringValues: []
+  searchRoomArgs:
+    keys:
+    - PurrNet
+    values:
+    - IsTheBest
+    stringKeys: []
+    stringValues: []
+  OnRoomJoined:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1267779088}
+        m_TargetAssemblyTypeName: PurrLobby.ViewManager, PurrNetLobbySetup
+        m_MethodName: OnRoomJoined
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRoomJoinFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1267779088}
+        m_TargetAssemblyTypeName: PurrLobby.ViewManager, PurrNetLobbySetup
+        m_MethodName: OnRoomLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRoomLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1245320926}
+        m_TargetAssemblyTypeName: PurrLobby.LobbyMemberList, PurrNetLobbySetup
+        m_MethodName: OnLobbyLeave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1267779088}
+        m_TargetAssemblyTypeName: PurrLobby.ViewManager, PurrNetLobbySetup
+        m_MethodName: OnRoomLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRoomUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1245320926}
+        m_TargetAssemblyTypeName: PurrLobby.LobbyMemberList, PurrNetLobbySetup
+        m_MethodName: LobbyDataUpdate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerListUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRoomSearchResults:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2086255125}
+        m_TargetAssemblyTypeName: PurrLobby.LobbyList, PurrNetLobbySetup
+        m_MethodName: Populate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnFriendListPulled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 739880333}
+        m_TargetAssemblyTypeName: PurrLobby.FriendsList, PurrNetLobbySetup
+        m_MethodName: Populate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAllReady:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1101657432332615104}
+        m_TargetAssemblyTypeName: PurrLobby.SceneSwitcher, PurrNetLobbySetup
+        m_MethodName: SwitchScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnError:
+    m_PersistentCalls:
+      m_Calls: []
+  onInitialized:
+    m_PersistentCalls:
+      m_Calls: []
+  onShutdown:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &6512273080954573158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382062159983868910}
   serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: OnRoomLeft.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1245320926}
-    - target: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: OnRoomLeft.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1267779088}
-    - target: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: OnRoomJoined.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1267779088}
-    - target: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: OnRoomUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1245320926}
-    - target: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: OnRoomJoinFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1267779088}
-    - target: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: OnFriendListPulled.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 739880333}
-    - target: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: OnRoomSearchResults.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2086255125}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3633963464751734466, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5630971017911655686, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: handleSteamInit
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6115436431874749514, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
-      propertyPath: m_Name
-      value: LobbyManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6512273080954573159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382062159983868910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31b1418005616414b926e4a1622c5537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 330585546}
   - {fileID: 832575519}
-  - {fileID: 7498022073850433444}
+  - {fileID: 6512273080954573158}
   - {fileID: 1267779087}
   - {fileID: 1740937621}

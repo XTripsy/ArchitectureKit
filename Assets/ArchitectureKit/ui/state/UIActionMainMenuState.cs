@@ -1,6 +1,8 @@
-using UnityEngine.UI;
 using UnityEngine;
-using Namespace_Level;
+using UnityEngine.UI;
+using Namespace_StateMainMenu_Event;
+using PurrLobby;
+using System.Collections.Generic;
 
 namespace Namespace_UIMainMenu
 {
@@ -8,47 +10,141 @@ namespace Namespace_UIMainMenu
     {
         private readonly IEventBus _bus;
         private readonly IUIManager _ui;
+        private readonly LobbyManager _lobbyManager;
 
-        public UIActionMainMenuState(IEventBus bus, IUIManager ui)
+        // UI IDs from UICatalog
+        private const string UI_MAIN = "ui-mainmenu";
+        private const string UI_BROWSE = "ui-lobby-browse";
+        private const string UI_CREATE = "ui-lobby-create";
+        private const string UI_LOADING = "ui-loading";
+
+        public UIActionMainMenuState(IEventBus bus, IUIManager ui, LobbyManager lobbyManager)
         {
             _bus = bus;
             _ui = ui;
+            _lobbyManager = lobbyManager;
         }
 
         public void OnMainMenuEnter()
         {
-            _ui.IShow("ui-mainmenu");
+            // 1. Subscribe to LobbyManager events
+            _lobbyManager.OnRoomJoined.AddListener(OnRoomJoined);
+            _lobbyManager.OnRoomSearchResults.AddListener(OnSearchResults);
+            _lobbyManager.OnRoomJoinFailed.AddListener(OnJoinFailed);
 
-            var buttons = _ui.IGetAllComponentInUI<Button>("ui-mainmenu");
-
-            foreach (var btn in buttons)
-            {
-                btn.onClick.RemoveAllListeners();
-                switch (btn.gameObject.name)
-                {
-                    case "btn-create":
-                        btn.onClick.AddListener(() => _bus.IPublish(new LevelRequest("lobby_scene")));
-                        btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("lobby_state")));
-                        break;
-                    case "btn-browse":
-                        btn.onClick.AddListener(() =>
-                        {
-                            Debug.Log("<color=yellow> BROWSE");
-                        });
-                        break;
-                    case "btn-join":
-                        btn.onClick.AddListener(() =>
-                        {
-                            Debug.Log("<color=blue> JOIN");
-                        });
-                        break;
-                }
-            }
+            // 2. Start at Root Screen
+            ShowMainScreen();
         }
 
         public void OnMainMenuExit()
         {
-            _ui.IHide("ui-mainmenu");
+            // 1. Hide All
+            _ui.IHide(UI_MAIN);
+            _ui.IHide(UI_BROWSE);
+            _ui.IHide(UI_CREATE);
+            _ui.IHide(UI_LOADING);
+
+            // 2. Unsubscribe
+            _lobbyManager.OnRoomJoined.RemoveListener(OnRoomJoined);
+            _lobbyManager.OnRoomSearchResults.RemoveListener(OnSearchResults);
+            _lobbyManager.OnRoomJoinFailed.RemoveListener(OnJoinFailed);
+        }
+
+        // --- Screen Navigation ---
+
+        private void ShowMainScreen()
+        {
+            _ui.IHide(UI_BROWSE);
+            _ui.IHide(UI_CREATE);
+            _ui.IHide(UI_LOADING);
+            _ui.IShow(UI_MAIN);
+
+            BindButton(UI_MAIN, "btn-browse", () =>
+            {
+                ShowBrowseScreen();
+                _lobbyManager.SearchLobbies(); // Auto-search on open
+                Debug.Log("<color=green>searching for lobbies</color>");
+            });
+
+            BindButton(UI_MAIN, "btn-create", ShowCreateScreen);
+            BindButton(UI_MAIN, "btn-quit", () => Application.Quit());
+        }
+
+        private void ShowBrowseScreen()
+        {
+            _ui.IHide(UI_MAIN);
+            _ui.IHide(UI_CREATE);
+            _ui.IShow(UI_BROWSE);
+
+            BindButton(UI_BROWSE, "btn-back", ShowMainScreen);
+            BindButton(UI_BROWSE, "btn-refresh", () => _lobbyManager.SearchLobbies());
+        }
+
+        private void ShowCreateScreen()
+        {
+            _ui.IHide(UI_MAIN);
+            _ui.IShow(UI_CREATE);
+
+            BindButton(UI_CREATE, "btn-cancel", ShowMainScreen);
+            BindButton(UI_CREATE, "btn-confirm", () =>
+            {
+                _ui.IShow(UI_LOADING);
+                _lobbyManager.CreateRoom();
+            });
+        }
+
+        // --- Logic Handlers ---
+
+        private void OnSearchResults(List<Lobby> lobbies)
+        {
+            var browseGo = _ui.IGet(UI_BROWSE);
+            if (!browseGo) return;
+
+            // Use the existing LobbyList script on the prefab to populate UI
+            var listScript = browseGo.GetComponentInChildren<LobbyList>();
+            if (listScript)
+            {
+                listScript.Populate(lobbies);
+            }
+        }
+
+        private void OnRoomJoined(Lobby lobby)
+        {
+            // Successful join -> Request transition to Lobby State
+            _bus.IPublish(new RequestStateEnter("lobby_state"));
+            Debug.Log("<color=green>Room Joined");
+        }
+
+        private void OnJoinFailed(string error)
+        {
+            _ui.IHide(UI_LOADING);
+            Debug.LogError($"Join Failed: {error}");
+            // Optional: Show error popup here
+        }
+
+        private void BindButton(string uiName, string buttonName, UnityEngine.Events.UnityAction action)
+        {
+            // Get all buttons in the UI canvas/panel
+            var allButtons = _ui.IGetAllComponentInUI<Button>(uiName);
+
+            if (allButtons == null)
+            {
+                Debug.LogWarning($"No buttons found in UI: {uiName}");
+                return;
+            }
+
+            // Iterate to find the one with the matching name
+            foreach (var btn in allButtons)
+            {
+                if (btn.gameObject.name == buttonName)
+                {
+                    btn.onClick.RemoveAllListeners();
+                    btn.onClick.AddListener(action);
+                    return; // Found and bound, exit method
+                }
+            }
+
+            Debug.LogWarning($"Button '{buttonName}' not found in '{uiName}'");
         }
     }
 }

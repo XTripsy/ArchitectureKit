@@ -4,6 +4,7 @@ using Namespace_InputMainMenu_Event;
 using Namespace_UIMainMenu;
 using Namespace_StateMainMenu_Event;
 using Namespace_Input;
+using PurrLobby;
 
 namespace Namespace_StateMainMenu
 {
@@ -19,12 +20,13 @@ namespace Namespace_StateMainMenu
             IInputManager input = installer.IResolve<IInputManager>();
             IUIManager ui = installer.IResolve<IUIManager>();
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
+            LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
 
             state.IRegister(name_state, new MainMenuState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);
             _InstallInputAction(bus);
-            _InstallUI(bus, ui);
+            _InstallUI(bus, ui, lobbyManager);
         }
 
         private void _InstallInput(IBootstrapContext installer, IEventBus bus, IInputManager input, string name_mapping)
@@ -46,9 +48,9 @@ namespace Namespace_StateMainMenu
             bus.ISubscribe<ActionBrowseMainMenuState>(_ => temp_input.JoinMainMenu());
         }
 
-        private void _InstallUI(IEventBus bus, IUIManager ui)
+        private void _InstallUI(IEventBus bus, IUIManager ui, LobbyManager lobbyManager)
         {
-            UIActionMainMenuState temp_ui = new UIActionMainMenuState(bus, ui);
+            UIActionMainMenuState temp_ui = new UIActionMainMenuState(bus, ui, lobbyManager);
             bus.ISubscribe<MainMenuStateEnter>(_ => temp_ui.OnMainMenuEnter());
             bus.ISubscribe<MainMenuStateExit>(_ => temp_ui.OnMainMenuExit());
         }

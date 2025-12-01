@@ -28,3 +28,18 @@ MonoBehaviour:
     defaultHidden: 0
     overrideSorting: 0
     sortingOrder: 0
+  - name: ui-lobby-browse
+    prefab: {fileID: 6548722659088141107, guid: 3a0b31311ae32344f9d127688d4f1133, type: 3}
+    defaultHidden: 0
+    overrideSorting: 0
+    sortingOrder: 0
+  - name: ui-lobby-create
+    prefab: {fileID: 6548722659088141107, guid: e67c0e424cf83dd46b4da0ae2a947d2a, type: 3}
+    defaultHidden: 0
+    overrideSorting: 0
+    sortingOrder: 0
+  - name: ui-loading
+    prefab: {fileID: 6548722659088141107, guid: 26f74309123b26c4ea8527a8b9f0db17, type: 3}
+    defaultHidden: 0
+    overrideSorting: 0
+    sortingOrder: 0

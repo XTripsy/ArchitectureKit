@@ -220,4 +220,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyManager: {fileID: 2600720515383328619}
-  nextScene: NetworkedScene
+  nextScene: lobby_scene
