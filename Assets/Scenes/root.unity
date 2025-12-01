@@ -157,7 +157,7 @@ MonoBehaviour:
   _objectManager:
     parent: {fileID: 1602706816}
     catalog: {fileID: 11400000, guid: 73d36b591df8de546b36e8a7dcc2ddaf, type: 2}
-  _networkManager: {fileID: 1899694720}
+  _lobbyManager: {fileID: 2600720515383328619, guid: 3d55804149a36164ca7ced172f689a18, type: 3}
 --- !u!4 &243602782
 Transform:
   m_ObjectHideFlags: 0

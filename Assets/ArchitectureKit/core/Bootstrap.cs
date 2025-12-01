@@ -9,6 +9,7 @@ using Namespace_StateGameplay;
 using Namespace_GameState;
 using Namespace_StatePause;
 using Namespace_Object;
+using PurrLobby;
 
 public sealed class Bootstrap : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public sealed class Bootstrap : MonoBehaviour
     [SerializeField] private LevelGroup _levelManager;
     [SerializeField] private InputGroup _inputManager;
     [SerializeField] private ObjectGroup _objectManager;
+    [SerializeField] private LobbyManager _lobbyManager;
 
     private IBootstrapContext _context;
     private IGameLoopManager _interface_gameLoopManager;
@@ -42,6 +44,11 @@ public sealed class Bootstrap : MonoBehaviour
             gameState,
             objects
         );
+
+        if (_lobbyManager != null)
+            _context.IRegister<LobbyManager>(_lobbyManager);
+        else
+            Debug.Log("<color=red>LobbyManager is missing in bootstrap");
 
         IInstaller<IBootstrapContext>[] installers =
         {

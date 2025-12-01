@@ -5,6 +5,7 @@ using Namespace_InputLobby_Event;
 using Namespace_StateLobby_Event;
 using Namespace_UILobby;
 using UnityEngine.InputSystem;
+using PurrLobby;
 
 namespace Namespace_StateLobby
 {
@@ -21,12 +22,13 @@ namespace Namespace_StateLobby
             IUIManager ui = installer.IResolve<IUIManager>();
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
             IObjectManager objectManager = installer.IResolve<IObjectManager>();
+            LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
 
             state.IRegister(name_state, new LobbyState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);
             _InstallInputAction(bus);
-            _InstallUI(bus, ui);
+            _InstallUI(bus, ui, lobbyManager);
             _InstallObject(bus, gameLoopManager, objectManager);
         }
 
@@ -48,9 +50,9 @@ namespace Namespace_StateLobby
             bus.ISubscribe<ActionJoinLobbyState>(_ => temp_input.JoinLobby());
         }
 
-        private void _InstallUI(IEventBus bus, IUIManager ui)
+        private void _InstallUI(IEventBus bus, IUIManager ui, LobbyManager lobbyManager)
         {
-            UIActionLobbyState temp = new UIActionLobbyState(bus, ui);
+            UIActionLobbyState temp = new UIActionLobbyState(ui, bus, lobbyManager);
             bus.ISubscribe<LobbyStateEnter>(_ => temp.OnLobbyEnter());
             bus.ISubscribe<LobbyStateExit>(_ => temp.OnLobbyExit());
         }

@@ -23,7 +23,7 @@ MonoBehaviour:
     defaultHidden: 0
     overrideSorting: 0
     sortingOrder: 0
-  - name: ui-lobby
+  - name: ui-lobby-room
     prefab: {fileID: 6548722659088141107, guid: a8cc4a07d792746469d98b61490bcf4a, type: 3}
     defaultHidden: 0
     overrideSorting: 0
