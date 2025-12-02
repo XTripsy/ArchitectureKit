@@ -19,7 +19,7 @@ namespace PurrLobby
         public CreateRoomArgs createRoomArgs = new();
         public SerializableDictionary<string, string> searchRoomArgs = new();
 
-        // Events exposed by the manager
+        // These events are empty in Inspector, but FILLED by UIAction scripts via code!
         public UnityEvent<Lobby> OnRoomJoined = new UnityEvent<Lobby>();
         public UnityEvent<string> OnRoomJoinFailed = new UnityEvent<string>();
         public UnityEvent OnRoomLeft = new UnityEvent();
@@ -39,14 +39,10 @@ namespace PurrLobby
         {
             get
             {
-                if (!_lobbyDataHolder)
-                    return default;
+                if (!_lobbyDataHolder) return default;
                 return _lobbyDataHolder.CurrentLobby;
             }
-            set
-            {
-                _lobbyDataHolder.SetCurrentLobby(value);
-            }
+            set => _lobbyDataHolder.SetCurrentLobby(value);
         }
 
         private Lobby _lastKnownState;
@@ -87,27 +83,15 @@ namespace PurrLobby
         private void Update()
         {
             while (_delayedActions.Count > 0)
-            {
                 _delayedActions.Dequeue()?.Invoke();
-            }
         }
 
         private void InvokeDelayed(Action action)
         {
-            try
-            {
-                _delayedActions.Enqueue(action);
-            }
-            catch (Exception ex)
-            {
-                PurrLogger.LogError($"Error in InvokeDelayed: {ex.Message}");
-            }
+            try { _delayedActions.Enqueue(action); }
+            catch (Exception ex) { PurrLogger.LogError($"Error in InvokeDelayed: {ex.Message}"); }
         }
 
-        /// <summary>
-        /// Set or switch the current provider
-        /// </summary>
-        /// <param name="provider"></param>
         public void SetProvider(ILobbyProvider provider)
         {
             if (_currentProvider != null)
@@ -129,10 +113,10 @@ namespace PurrLobby
             }
         }
 
-        // Subscribe to provider events
         private void SubscribeToProviderEvents()
         {
             _currentProvider.OnLobbyJoinFailed += message => InvokeDelayed(() => OnRoomJoinFailed.Invoke(message));
+
             _currentProvider.OnLobbyLeft += () => InvokeDelayed(() =>
             {
                 _currentLobby = default;
@@ -149,24 +133,15 @@ namespace PurrLobby
 
                 if (!IsStarting && room.Members.TrueForAll(x => x.IsReady))
                 {
-                    IsStarting = true; //Prevent calling ready again if lobby is updated after all ready
+                    IsStarting = true;
                     CallOnAllReady();
                 }
             });
 
             _currentProvider.OnLobbyPlayerListUpdated += players => InvokeDelayed(() => OnPlayerListUpdated.Invoke(players));
             _currentProvider.OnError += error => InvokeDelayed(() => OnError.Invoke(error));
-
-            _currentProvider.OnLobbyUpdated += room =>
-            {
-                if (room.IsValid)
-                {
-                    InvokeDelayed(() => OnRoomJoined?.Invoke(room));
-                }
-            };
         }
 
-        // Unsubscribe from provider events
         private void UnsubscribeFromProviderEvents()
         {
             _currentProvider.OnLobbyJoinFailed -= message => InvokeDelayed(() => OnRoomJoinFailed.Invoke(message));
@@ -174,20 +149,8 @@ namespace PurrLobby
             _currentProvider.OnLobbyUpdated -= room => InvokeDelayed(() => OnRoomUpdated.Invoke(room));
             _currentProvider.OnLobbyPlayerListUpdated -= players => InvokeDelayed(() => OnPlayerListUpdated.Invoke(players));
             _currentProvider.OnError -= error => InvokeDelayed(() => OnError.Invoke(error));
-
-            // ReSharper disable once EventUnsubscriptionViaAnonymousDelegate
-            _currentProvider.OnLobbyUpdated -= room =>
-            {
-                if (room.IsValid)
-                {
-                    InvokeDelayed(() => OnRoomJoined?.Invoke(room));
-                }
-            };
         }
 
-        /// <summary>
-        /// Shuts down and clears the current provider
-        /// </summary>
         public void Shutdown()
         {
             EnsureProviderSet();
@@ -195,9 +158,6 @@ namespace PurrLobby
             onShutdown?.Invoke();
         }
 
-        /// <summary>
-        /// Prompts the provider to pull friends from the platform's friend list.
-        /// </summary>
         public void PullFriends(FriendFilter filter)
         {
             RunTask(async () =>
@@ -208,10 +168,6 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Invite the given user to the current lobby.
-        /// </summary>
-        /// <param name="user"></param>
         public void InviteFriend(FriendUser user)
         {
             RunTask(async () =>
@@ -221,17 +177,12 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Creates a room using the inspector CreateRoomArgs values.
-        /// </summary>
         public void CreateRoom()
         {
             CreateRoom(createRoomArgs.maxPlayers, createRoomArgs.roomProperties.ToDictionary());
         }
 
-        /// <summary>
-        /// Creates a room using custom settings set through code
-        /// </summary>
+        // --- THE CRITICAL FIX IS HERE ---
         public void CreateRoom(int maxPlayers, Dictionary<string, string> roomProperties = null)
         {
             RunTask(async () =>
@@ -239,13 +190,23 @@ namespace PurrLobby
                 EnsureProviderSet();
                 var room = await _currentProvider.CreateLobbyAsync(maxPlayers, roomProperties);
                 _currentLobby = room;
+
+                // 1. Tell UI to update visual data
                 OnRoomUpdated?.Invoke(room);
+
+                // 2. THIS WAS MISSING: Tell UI we officially Joined (Trigger State Change)
+                if (room.IsValid)
+                {
+                    Debug.Log("Room Created Successfully - Invoking OnRoomJoined");
+                    OnRoomJoined?.Invoke(room);
+                }
+                else
+                {
+                    OnRoomJoinFailed?.Invoke("Failed to create room: Invalid Result");
+                }
             });
         }
 
-        /// <summary>
-        /// Leave the lobby
-        /// </summary>
         public void LeaveLobby()
         {
             RunTask(async () =>
@@ -256,9 +217,6 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Leave a specific lobby
-        /// </summary>
         public void LeaveLobby(string lobbyId)
         {
             RunTask(async () =>
@@ -269,10 +227,6 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Join the lobby with the given ID
-        /// </summary>
-        /// <param name="roomId">ID of the lobby to join</param>
         public void JoinLobby(string roomId)
         {
             if (string.IsNullOrEmpty(roomId))
@@ -296,11 +250,6 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Prompts the provider to search lobbies with given filters
-        /// </summary>
-        /// <param name="maxRoomsToFind">Max amount of rooms to find</param>
-        /// <param name="filters">Filters to use for search - only works if the provider supports it</param>
         public void SearchLobbies(int maxRoomsToFind = 10, Dictionary<string, string> filters = null)
         {
             if (filters == null)
@@ -316,11 +265,6 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Set's the given User to Ready
-        /// </summary>
-        /// <param name="userId">User ID of player</param>
-        /// <param name="isReady">Ready state to set</param>
         public void SetIsReady(string userId, bool isReady)
         {
             RunTask(async () =>
@@ -330,11 +274,6 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Sets meta data on the current lobby we're in
-        /// </summary>
-        /// <param name="key">Key/Identifier of the meta data</param>
-        /// <param name="value">The value of the meta data to be stored</param>
         public void SetLobbyData(string key, string value)
         {
             RunTask(async () =>
@@ -344,34 +283,18 @@ namespace PurrLobby
             });
         }
 
-        /// <summary>
-        /// Gets meta data from the current lobby we're in
-        /// </summary>
-        /// <param name="key">Key/Identifier of the meta data we want</param>
-        /// <returns>Value of the meta data we get</returns>
         public async Task<String> GetLobbyData(string key)
         {
             EnsureProviderSet();
             return await _currentProvider.GetLobbyDataAsync(key);
         }
 
-        /// <summary>
-        /// Toggles the local users ready state automatically
-        /// </summary>
         public void ToggleLocalReady()
         {
-            if (!_currentLobby.IsValid)
-            {
-                PurrLogger.LogError($"Can't toggle ready state, current lobby is invalid.");
-                return;
-            }
+            if (!_currentLobby.IsValid) return;
 
             var localUserId = _currentProvider.GetLocalUserIdAsync().Result;
-            if (string.IsNullOrEmpty(localUserId))
-            {
-                PurrLogger.LogError($"Can't toggle ready state, local user ID is null or empty.");
-                return;
-            }
+            if (string.IsNullOrEmpty(localUserId)) return;
 
             var localLobbyUser = _currentLobby.Members.Find(x => x.Id == localUserId);
             SetIsReady(localUserId, !localLobbyUser.IsReady);
@@ -389,17 +312,13 @@ namespace PurrLobby
             if (_currentLobby.IsValid && _currentLobby.Members.TrueForAll(x => x.IsReady))
             {
                 await _currentProvider.SetAllReadyAsync();
-
                 OnAllReady?.Invoke();
             }
         }
 
         public async Task WaitForAllTasksAsync()
         {
-            while (_taskLock > 0)
-            {
-                await Task.Yield();
-            }
+            while (_taskLock > 0) await Task.Yield();
         }
 
         private async void RunTask(Func<Task> taskFunc)
@@ -407,19 +326,12 @@ namespace PurrLobby
             if (taskFunc == null || _currentProvider == null) return;
 
             _taskLock++;
-            try
-            {
-                await taskFunc();
-            }
-            catch (Exception ex)
-            {
-                PurrLogger.LogError($"Task Error: {ex.Message}");
-            }
+            try { await taskFunc(); }
+            catch (Exception ex) { PurrLogger.LogError($"Task Error: {ex.Message}"); }
             finally
             {
                 _taskLock--;
-                if (_taskLock < 0)
-                    _taskLock = 0;
+                if (_taskLock < 0) _taskLock = 0;
             }
         }
 
@@ -442,11 +354,6 @@ namespace PurrLobby
         }
 
         [System.Serializable]
-        public enum FriendFilter
-        {
-            InThisGame,
-            Online,
-            All
-        }
+        public enum FriendFilter { InThisGame, Online, All }
     }
 }

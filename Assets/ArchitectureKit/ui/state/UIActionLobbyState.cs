@@ -25,6 +25,8 @@ namespace Namespace_UILobby
 
         public void OnLobbyEnter()
         {
+            Debug.Log("Entered lobby state");
+
             // 1. Subscribe to LobbyManager events
             _lobbyManager.OnRoomLeft.AddListener(OnLeftRoom);
             _lobbyManager.OnRoomUpdated.AddListener(OnLobbyUpdated);

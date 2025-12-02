@@ -70,6 +70,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
 
         if (!File.Exists(SharedFilePath))
         {
+            File.Delete(SharedFilePath);
             SaveSharedState(new SharedLobbyState());
         }
 

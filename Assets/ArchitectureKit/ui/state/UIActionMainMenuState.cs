@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Namespace_StateMainMenu_Event;
 using PurrLobby;
 using System.Collections.Generic;
+using Namespace_Level;
 
 namespace Namespace_UIMainMenu
 {
@@ -112,6 +113,7 @@ namespace Namespace_UIMainMenu
         {
             // Successful join -> Request transition to Lobby State
             _bus.IPublish(new RequestStateEnter("lobby_state"));
+            _bus.IPublish(new LevelRequest("lobby_scene"));
             Debug.Log("<color=green>Room Joined");
         }
 
