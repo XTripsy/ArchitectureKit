@@ -15,7 +15,9 @@ MonoBehaviour:
   autoGenerate: 0
   folder: {fileID: 0}
   _enabledTypeNames: []
-  assets: []
+  assets:
+  - {fileID: 7648545361110943458, guid: 1c03d3b9ce421324ba0b3c85d2e4a2d9, type: 3}
   _availableTypeNames: []
-  _bakedIds: 
-  _bakedAssets: []
+  _bakedIds: 00000000
+  _bakedAssets:
+  - {fileID: 7648545361110943458, guid: 1c03d3b9ce421324ba0b3c85d2e4a2d9, type: 3}

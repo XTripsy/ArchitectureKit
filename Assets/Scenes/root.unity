@@ -533,7 +533,7 @@ MonoBehaviour:
   OnAllReady:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7442071669679032397}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PurrLobby.SceneSwitcher, PurrNetLobbySetup
         m_MethodName: SwitchScene
         m_Mode: 1
@@ -595,7 +595,6 @@ GameObject:
   - component: {fileID: 3633963466321028331}
   - component: {fileID: 2600720516951557442}
   - component: {fileID: 5630971016259659567}
-  - component: {fileID: 7442071669679032397}
   - component: {fileID: 1669970476}
   m_Layer: 0
   m_Name: LobbyManager
@@ -604,20 +603,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &7442071669679032397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6115436432470953571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bffc99f43c7c4224b8dccb9831f662a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lobbyManager: {fileID: 2600720516951557442}
-  nextScene: lobby_scene
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

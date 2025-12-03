@@ -4,6 +4,7 @@ using Namespace_StateLobby_Event;
 using PurrLobby;
 using System.Collections.Generic;
 using Namespace_StateMainMenu_Event;
+using Namespace_Level;
 
 namespace Namespace_UILobby
 {
@@ -28,9 +29,9 @@ namespace Namespace_UILobby
             Debug.Log("Entered lobby state");
 
             // 1. Subscribe to LobbyManager events
-            _lobbyManager.OnRoomLeft.AddListener(OnLeftRoom);
-            _lobbyManager.OnRoomUpdated.AddListener(OnLobbyUpdated);
-
+            _lobbyManager.OnRoomLeft.AddListener(CallOnRoomLeft);
+            _lobbyManager.OnRoomUpdated.AddListener(CallOnRoomUpdated);
+            _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
             // 2. Show the Room UI
             _ui.IShow(UI_ROOM);
 
@@ -47,21 +48,23 @@ namespace Namespace_UILobby
             _ui.IHide(UI_ROOM);
 
             // 2. Unsubscribe events
-            _lobbyManager.OnRoomLeft.RemoveListener(OnLeftRoom);
-            _lobbyManager.OnRoomUpdated.RemoveListener(OnLobbyUpdated);
+            _lobbyManager.OnRoomLeft.RemoveListener(CallOnRoomLeft);
+            _lobbyManager.OnRoomUpdated.RemoveListener(CallOnRoomUpdated);
+            _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
         }
 
-        // --- Event Callbacks ---
+        #region EVENT CALLBACKS
 
-        private void OnLeftRoom()
+        private void CallOnRoomLeft()
         {
             // When we leave the room (logic handled by LobbyManager), we transition back to Main Menu state
-            _bus.IPublish(new MainMenuStateEnter());
+            _bus.IPublish(new RequestStateEnter("mainmenu_state"));
+            _bus.IPublish(new LevelRequest("mainmenu_scene"));
             // Note: Depending on your StateMachine implementation, you might use 'RequestStateEnter("mainmenu_state")' instead
             // But based on your imports, this event seems to trigger the flow.
         }
 
-        private void OnLobbyUpdated(Lobby lobby)
+        private void CallOnRoomUpdated(Lobby lobby)
         {
             UpdateRoomUI(lobby);
         }
@@ -76,13 +79,22 @@ namespace Namespace_UILobby
             if (memberList) memberList.LobbyDataUpdate(lobby);
 
             // Bind Room Buttons
-            BindButton(UI_ROOM, "Btn_Ready", () => _lobbyManager.ToggleLocalReady());
-            BindButton(UI_ROOM, "Btn_Leave", () => _lobbyManager.LeaveLobby());
+            BindButton(UI_ROOM, "btn-ready", () => _lobbyManager.ToggleLocalReady());
+            BindButton(UI_ROOM, "btn-leave", () => _lobbyManager.LeaveLobby());
 
             // Example: Update Room Name Text
             // var title = _ui.IGetComponentInUI<TMPro.TMP_Text>(UI_ROOM, "Text_RoomName");
             // if (title) title.text = lobby.Name;
         }
+
+        private void CallOnAllReady()
+        {
+            Debug.Log("<color=green>OnAllReady");
+            _bus.IPublish(new RequestStateEnter("gameplay_state"));
+            _bus.IPublish(new LevelRequest("gameplay_scene"));
+        }
+
+        #endregion
 
         // Helper to find button and add listener safely
         private void BindButton(string uiName, string childPath, UnityEngine.Events.UnityAction action)

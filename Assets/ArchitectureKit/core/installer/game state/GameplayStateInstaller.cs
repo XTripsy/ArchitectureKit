@@ -2,7 +2,10 @@
 using Namespace_InputGameplay;
 using Namespace_InputGameplay_Event;
 using Namespace_StateGameplay_Event;
+using Namespace_Spawner.Player;
 using UnityEngine.InputSystem;
+using UnityEngine;
+using Namespace_Level;
 
 namespace Namespace_StateGameplay
 {
@@ -17,6 +20,21 @@ namespace Namespace_StateGameplay
             IStateRegistry state = installer.IGetStateRegistry;
             IInputManager input = installer.IResolve<IInputManager>();
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
+
+
+            // spawner initialization karena beda scene
+            bus.ISubscribe<LevelLoad>(e =>
+            {
+                if (e.level != "gameplay_scene") return;
+
+                NetworkPlayerSpawner spawner = Object.FindFirstObjectByType<NetworkPlayerSpawner>();
+                if (spawner != null)
+                {
+                    spawner.Init(bus);
+                }
+                else
+                    Debug.Log("<color=red>spawner is null");
+            });
 
             state.IRegister(name_state, new GameplayState(bus));
 

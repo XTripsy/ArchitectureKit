@@ -65,14 +65,12 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
     public Task InitializeAsync()
     {
         _localUserId = System.Guid.NewGuid().ToString();
-        Debug.Log($"[MockLobby] Initialized with UserId: {_localUserId}");
-        Debug.Log($"[MockLobby] Shared file path: {SharedFilePath}");
+        // Debug.Log($"[MockLobby] Initialized with UserId: {_localUserId}");
+        // Debug.Log($"[MockLobby] Shared file path: {SharedFilePath}");
 
-        if (!File.Exists(SharedFilePath))
-        {
-            File.Delete(SharedFilePath);
-            SaveSharedState(new SharedLobbyState());
-        }
+        // saving file to mock_lobby.json
+        File.Delete(SharedFilePath);
+        SaveSharedState(new SharedLobbyState());
 
         return Task.CompletedTask;
     }
@@ -116,7 +114,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         StartPolling();
 
         var lobby = ConvertToLobby(lobbyData, true);
-        Debug.Log($"[MockLobby] Created lobby: {lobbyId} with {lobby.Members.Count} members");
+        // Debug.Log($"[MockLobby] Created lobby: {lobbyId} with {lobby.Members.Count} members");
 
         await Task.Delay(100);
         OnLobbyUpdated?.Invoke(lobby);
@@ -150,7 +148,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         }
 
         _lastBrowseCount = results.Count;
-        Debug.Log($"[MockLobby] Found {results.Count} lobbies");
+        // Debug.Log($"[MockLobby] Found {results.Count} lobbies");
 
         // Start browse polling to keep list updated
         StartBrowsePolling();
@@ -194,7 +192,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         StartPolling();
 
         var lobby = ConvertToLobby(lobbyData, false);
-        Debug.Log($"[MockLobby] Joined lobby: {lobbyId} with {lobby.Members.Count} members");
+        // Debug.Log($"[MockLobby] Joined lobby: {lobbyId} with {lobby.Members.Count} members");
 
         await Task.Delay(100);
         OnLobbyUpdated?.Invoke(lobby);
@@ -233,7 +231,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         _lastMemberCount = 0;
         _lastReadyCount = 0;
 
-        Debug.Log("[MockLobby] Left lobby");
+        // Debug.Log("[MockLobby] Left lobby");
         OnLobbyLeft?.Invoke();
         return Task.CompletedTask;
     }
@@ -263,7 +261,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
                 lobbyData.memberReady[index] = isReady;
                 lobbyData.lastUpdateTicks = System.DateTime.UtcNow.Ticks;
                 SaveSharedState(state);
-                Debug.Log($"[MockLobby] Set ready: {isReady}, triggering update");
+                // Debug.Log($"[MockLobby] Set ready: {isReady}, triggering update");
 
                 // Force immediate update
                 PollLobbyUpdates();
@@ -311,7 +309,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
             lobbyData.started = true;
             lobbyData.lastUpdateTicks = System.DateTime.UtcNow.Ticks;
             SaveSharedState(state);
-            Debug.Log("[MockLobby] Lobby started");
+            // Debug.Log("[MockLobby] Lobby started");
         }
 
         return Task.CompletedTask;
@@ -369,7 +367,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         if (_isPolling) return;
         _isPolling = true;
         InvokeRepeating(nameof(PollLobbyUpdates), POLL_INTERVAL, POLL_INTERVAL);
-        Debug.Log("[MockLobby] Started polling for updates");
+        // Debug.Log("[MockLobby] Started polling for updates");
     }
 
     private void StopPolling()
@@ -377,7 +375,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         if (!_isPolling) return;
         _isPolling = false;
         CancelInvoke(nameof(PollLobbyUpdates));
-        Debug.Log("[MockLobby] Stopped polling");
+        // Debug.Log("[MockLobby] Stopped polling");
     }
 
     private void StartBrowsePolling()
@@ -385,7 +383,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         if (_isBrowsePolling) return;
         _isBrowsePolling = true;
         InvokeRepeating(nameof(PollBrowseUpdates), BROWSE_POLL_INTERVAL, BROWSE_POLL_INTERVAL);
-        Debug.Log("[MockLobby] Started browse polling");
+        // Debug.Log("[MockLobby] Started browse polling");
     }
 
     private void StopBrowsePolling()
@@ -393,7 +391,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         if (!_isBrowsePolling) return;
         _isBrowsePolling = false;
         CancelInvoke(nameof(PollBrowseUpdates));
-        Debug.Log("[MockLobby] Stopped browse polling");
+        // Debug.Log("[MockLobby] Stopped browse polling");
     }
 
     private void PollBrowseUpdates()
@@ -423,7 +421,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
         if (results.Count != _lastBrowseCount)
         {
             _lastBrowseCount = results.Count;
-            Debug.Log($"[MockLobby] Browse list changed: {results.Count} lobbies");
+            // Debug.Log($"[MockLobby] Browse list changed: {results.Count} lobbies");
             // Note: PurrLobby doesn't have a browse update event, so UI needs to call SearchLobbiesAsync periodically
         }
     }
@@ -437,7 +435,7 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
 
         if (lobbyData == null)
         {
-            Debug.Log("[MockLobby] Lobby deleted, leaving");
+            // Debug.Log("[MockLobby] Lobby deleted, leaving");
             StopPolling();
             _currentLobbyId = null;
             OnLobbyLeft?.Invoke();
@@ -452,18 +450,18 @@ public class LocalMockLobbyProvider : MonoBehaviour, ILobbyProvider
 
         if (hasChanges)
         {
-            Debug.Log($"[MockLobby] Detected changes - Members: {_lastMemberCount}->{currentMemberCount}, Ready: {_lastReadyCount}->{currentReadyCount}");
+            // Debug.Log($"[MockLobby] Detected changes - Members: {_lastMemberCount}->{currentMemberCount}, Ready: {_lastReadyCount}->{currentReadyCount}");
             _lastMemberCount = currentMemberCount;
             _lastReadyCount = currentReadyCount;
 
             var isOwner = lobbyData.memberIds.FirstOrDefault() == _localUserId;
             var lobby = ConvertToLobby(lobbyData, isOwner);
 
-            Debug.Log($"[MockLobby] Invoking OnLobbyUpdated with {lobby.Members.Count} members");
+            // Debug.Log($"[MockLobby] Invoking OnLobbyUpdated with {lobby.Members.Count} members");
             OnLobbyUpdated?.Invoke(lobby);
 
             var users = lobby.Members;
-            Debug.Log($"[MockLobby] Invoking OnLobbyPlayerListUpdated with {users.Count} members");
+            // Debug.Log($"[MockLobby] Invoking OnLobbyPlayerListUpdated with {users.Count} members");
             OnLobbyPlayerListUpdated?.Invoke(users);
         }
     }

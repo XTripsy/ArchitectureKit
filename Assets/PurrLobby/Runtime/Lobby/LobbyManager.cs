@@ -19,7 +19,7 @@ namespace PurrLobby
         public CreateRoomArgs createRoomArgs = new();
         public SerializableDictionary<string, string> searchRoomArgs = new();
 
-        // These events are empty in Inspector, but FILLED by UIAction scripts via code!
+        // These events are empty in Inspector, but FILLED by UIAction scripts via code! (TORA: WE DON't WANT THIS)
         public UnityEvent<Lobby> OnRoomJoined = new UnityEvent<Lobby>();
         public UnityEvent<string> OnRoomJoinFailed = new UnityEvent<string>();
         public UnityEvent OnRoomLeft = new UnityEvent();
@@ -292,7 +292,7 @@ namespace PurrLobby
         public void ToggleLocalReady()
         {
             if (!_currentLobby.IsValid) return;
-
+            Debug.Log("<color=green>ToggleLocalReady()");
             var localUserId = _currentProvider.GetLocalUserIdAsync().Result;
             if (string.IsNullOrEmpty(localUserId)) return;
 

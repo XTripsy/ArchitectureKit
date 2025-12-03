@@ -4,6 +4,7 @@ using Namespace_StateMainMenu_Event;
 using PurrLobby;
 using System.Collections.Generic;
 using Namespace_Level;
+using TMPro;
 
 namespace Namespace_UIMainMenu
 {
@@ -29,9 +30,9 @@ namespace Namespace_UIMainMenu
         public void OnMainMenuEnter()
         {
             // 1. Subscribe to LobbyManager events
-            _lobbyManager.OnRoomJoined.AddListener(OnRoomJoined);
-            _lobbyManager.OnRoomSearchResults.AddListener(OnSearchResults);
-            _lobbyManager.OnRoomJoinFailed.AddListener(OnJoinFailed);
+            _lobbyManager.OnRoomJoined.AddListener(CallOnRoomJoined);
+            _lobbyManager.OnRoomSearchResults.AddListener(CallOnSearchResults);
+            _lobbyManager.OnRoomJoinFailed.AddListener(CallOnJoinFailed);
 
             // 2. Start at Root Screen
             ShowMainScreen();
@@ -46,9 +47,9 @@ namespace Namespace_UIMainMenu
             _ui.IHide(UI_LOADING);
 
             // 2. Unsubscribe
-            _lobbyManager.OnRoomJoined.RemoveListener(OnRoomJoined);
-            _lobbyManager.OnRoomSearchResults.RemoveListener(OnSearchResults);
-            _lobbyManager.OnRoomJoinFailed.RemoveListener(OnJoinFailed);
+            _lobbyManager.OnRoomJoined.RemoveListener(CallOnRoomJoined);
+            _lobbyManager.OnRoomSearchResults.RemoveListener(CallOnSearchResults);
+            _lobbyManager.OnRoomJoinFailed.RemoveListener(CallOnJoinFailed);
         }
 
         // --- Screen Navigation ---
@@ -60,6 +61,9 @@ namespace Namespace_UIMainMenu
             _ui.IHide(UI_LOADING);
             _ui.IShow(UI_MAIN);
 
+
+
+
             BindButton(UI_MAIN, "btn-browse", () =>
             {
                 ShowBrowseScreen();
@@ -69,6 +73,7 @@ namespace Namespace_UIMainMenu
 
             BindButton(UI_MAIN, "btn-create", ShowCreateScreen);
             BindButton(UI_MAIN, "btn-quit", () => Application.Quit());
+            BindButton(UI_MAIN, "btn-join", () => JoinRoom());
         }
 
         private void ShowBrowseScreen()
@@ -94,9 +99,25 @@ namespace Namespace_UIMainMenu
             });
         }
 
-        // --- Logic Handlers ---
+        private void JoinRoom()
+        {
+            var inputfields = _ui.IGetAllComponentInUI<TMP_InputField>(UI_MAIN);
 
-        private void OnSearchResults(List<Lobby> lobbies)
+            foreach (var inputfield in inputfields)
+            {
+                switch (inputfield.gameObject.name)
+                {
+                    case "input-code":
+                        _lobbyManager.JoinLobby(inputfield.text);
+                        Debug.Log($"<color=green> joining room {inputfield}");
+                        break;
+                }
+            }
+        }
+
+        #region EVENT CALLBACKS
+
+        private void CallOnSearchResults(List<Lobby> lobbies)
         {
             var browseGo = _ui.IGet(UI_BROWSE);
             if (!browseGo) return;
@@ -109,7 +130,7 @@ namespace Namespace_UIMainMenu
             }
         }
 
-        private void OnRoomJoined(Lobby lobby)
+        private void CallOnRoomJoined(Lobby lobby)
         {
             // Successful join -> Request transition to Lobby State
             _bus.IPublish(new RequestStateEnter("lobby_state"));
@@ -117,12 +138,14 @@ namespace Namespace_UIMainMenu
             Debug.Log("<color=green>Room Joined");
         }
 
-        private void OnJoinFailed(string error)
+        private void CallOnJoinFailed(string error)
         {
             _ui.IHide(UI_LOADING);
             Debug.LogError($"Join Failed: {error}");
             // Optional: Show error popup here
         }
+
+        #endregion
 
         private void BindButton(string uiName, string buttonName, UnityEngine.Events.UnityAction action)
         {
