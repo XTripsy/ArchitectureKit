@@ -23,18 +23,18 @@ namespace Namespace_StateGameplay
 
 
             // spawner initialization karena beda scene
-            bus.ISubscribe<LevelLoad>(e =>
-            {
-                if (e.level != "gameplay_scene") return;
-
-                NetworkPlayerSpawner spawner = Object.FindFirstObjectByType<NetworkPlayerSpawner>();
-                if (spawner != null)
-                {
-                    spawner.Init(bus);
-                }
-                else
-                    Debug.Log("<color=red>spawner is null");
-            });
+            // bus.ISubscribe<LevelLoad>(e =>
+            // {
+            //     if (e.level != "gameplay_scene") return;
+            //     Debug.Log("<color=blue>Network Spawner Installed");
+            //     NetworkPlayerSpawner spawner = Object.FindFirstObjectByType<NetworkPlayerSpawner>();
+            //     if (spawner != null)
+            //     {
+            //         spawner.Init(bus);
+            //     }
+            //     else
+            //         Debug.Log("<color=red>spawner is null");
+            // });
 
             state.IRegister(name_state, new GameplayState(bus));
 

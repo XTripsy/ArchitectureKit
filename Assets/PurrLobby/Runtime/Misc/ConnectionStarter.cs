@@ -65,7 +65,10 @@ namespace PurrLobby
 #endif
 
             if (_lobbyDataHolder.CurrentLobby.IsOwner)
+            {
                 _networkManager.StartServer();
+                Debug.Log("<color=red> you are the HOST");
+            }
             StartCoroutine(StartClient());
         }
 
@@ -73,6 +76,7 @@ namespace PurrLobby
         {
             yield return new WaitForSeconds(1f);
             _networkManager.StartClient();
+            Debug.Log("<color=green>you are the CLIENT");
         }
     }
 }

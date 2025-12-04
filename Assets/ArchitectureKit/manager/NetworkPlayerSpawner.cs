@@ -78,6 +78,7 @@ public sealed class NetworkPlayerSpawner : PurrMonoBehaviour
 
         var go = UnityProxy.Instantiate(playerPrefab, pos, rot, gameObject.scene);
 
+        // give ownership to players
         if (go.TryGetComponent(out NetworkIdentity net))
             net.GiveOwnership(e.player);
 

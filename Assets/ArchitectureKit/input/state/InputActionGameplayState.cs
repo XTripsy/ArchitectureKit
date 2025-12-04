@@ -19,12 +19,12 @@ namespace Namespace_InputGameplay
 
         public void ClickGameplay()
         {
-            Debug.Log("<color=red>CLICK");
+            Debug.Log("<color=red> CLICK");
         }
 
         public void PauseGameplay()
         {
-            Debug.LogError("Pause");
+            Debug.Log("<color=red> PAUSED");
             _bus.IPublish(new RequestStateEnter("pause_state"));
         }
     }

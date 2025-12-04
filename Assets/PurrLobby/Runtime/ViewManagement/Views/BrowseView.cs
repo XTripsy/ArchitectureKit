@@ -9,7 +9,7 @@ namespace PurrLobby
 
         private bool _isActive;
         private float _lastSearchTime;
-        
+
         public override void OnShow()
         {
             lobbyManager.SearchLobbies();
@@ -24,7 +24,7 @@ namespace PurrLobby
 
         private void Update()
         {
-            if(!_isActive)
+            if (!_isActive)
                 return;
 
             if (_lastSearchTime + 5f < Time.time)
@@ -34,4 +34,5 @@ namespace PurrLobby
             }
         }
     }
+
 }

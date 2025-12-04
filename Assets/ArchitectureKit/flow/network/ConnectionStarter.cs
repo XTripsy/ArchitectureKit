@@ -8,11 +8,6 @@ using Unity.Multiplayer.Playmode;
 using Steamworks;
 using PurrLobby;
 
-#if UTP_LOBBYRELAY
-using PurrNet.UTP;
-using Unity.Services.Relay.Models;
-#endif
-
 public class ConnectionStarter : MonoBehaviour
 {
     private NetworkManager _networkManager;
@@ -79,18 +74,18 @@ public class ConnectionStarter : MonoBehaviour
         }
 
         if (_lobbyDataHolder.CurrentLobby.IsOwner)
+        {
             _networkManager.StartServer();
+            Debug.Log("<color=red> You Are Lobby Owner");
+        }
         StartCoroutine(StartClient());
-
-        // if (CurrentPlayer.IsMainEditor)
-        //     _networkManager.StartServer();
-        // StartCoroutine(StartClient());
     }
 
     private IEnumerator StartClient()
     {
         yield return new WaitForSeconds(1f);
         _networkManager.StartClient();
+        Debug.Log("<color=green> You Are The Client in this Lobby");
     }
 }
 

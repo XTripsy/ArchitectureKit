@@ -6,6 +6,8 @@ using Namespace_StateLobby_Event;
 using Namespace_UILobby;
 using UnityEngine.InputSystem;
 using PurrLobby;
+using Namespace_Level;
+using UnityEngine;
 
 namespace Namespace_StateLobby
 {
@@ -23,6 +25,18 @@ namespace Namespace_StateLobby
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
             IObjectManager objectManager = installer.IResolve<IObjectManager>();
             LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
+
+            // spawner initialization karena beda scene
+            bus.ISubscribe<LevelLoad>(e =>
+            {
+                if (e.level != "lobby_scene") return;
+
+                NetworkPlayerSpawner spawner = Object.FindFirstObjectByType<NetworkPlayerSpawner>();
+                if (spawner != null)
+                    spawner.Init(bus);
+                else
+                    Debug.Log("<color=red>spawner is null");
+            });
 
             state.IRegister(name_state, new LobbyState(bus));
 

@@ -1,10 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using Namespace_StateLobby_Event;
+﻿using TMPro;
 using PurrLobby;
+using UnityEngine;
+using UnityEngine.UI;
+using Namespace_Level;
+using System.Collections;
+using Namespace_StateLobby_Event;
 using System.Collections.Generic;
 using Namespace_StateMainMenu_Event;
-using Namespace_Level;
 
 namespace Namespace_UILobby
 {
@@ -13,9 +15,8 @@ namespace Namespace_UILobby
         private readonly IUIManager _ui;
         private readonly IEventBus _bus;
         private readonly LobbyManager _lobbyManager;
-
-        // Names defined in UICatalog
         private const string UI_ROOM = "ui-lobby-room";
+        private string roomId;
 
         public UIActionLobbyState(IUIManager ui, IEventBus bus, LobbyManager lobbyManager)
         {
@@ -42,6 +43,7 @@ namespace Namespace_UILobby
             }
         }
 
+
         public void OnLobbyExit()
         {
             // 1. Hide UI
@@ -51,6 +53,23 @@ namespace Namespace_UILobby
             _lobbyManager.OnRoomLeft.RemoveListener(CallOnRoomLeft);
             _lobbyManager.OnRoomUpdated.RemoveListener(CallOnRoomUpdated);
             _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
+        }
+
+        private void LobbyCode()
+        {
+            var texts = _ui.IGetAllComponentInUI<TMP_Text>(UI_ROOM);
+            foreach (var text in texts)
+            {
+                switch (text.gameObject.name)
+                {
+                    case "txt-code":
+                        roomId = _lobbyManager.CurrentLobby.LobbyId;
+                        text.text = roomId;
+                        break;
+                }
+            }
+
+
         }
 
         #region EVENT CALLBACKS
@@ -78,13 +97,13 @@ namespace Namespace_UILobby
             var memberList = roomGo.GetComponentInChildren<LobbyMemberList>();
             if (memberList) memberList.LobbyDataUpdate(lobby);
 
+            //set lobby code
+            LobbyCode();
+
             // Bind Room Buttons
             BindButton(UI_ROOM, "btn-ready", () => _lobbyManager.ToggleLocalReady());
             BindButton(UI_ROOM, "btn-leave", () => _lobbyManager.LeaveLobby());
-
-            // Example: Update Room Name Text
-            // var title = _ui.IGetComponentInUI<TMPro.TMP_Text>(UI_ROOM, "Text_RoomName");
-            // if (title) title.text = lobby.Name;
+            BindButton(UI_ROOM, "btn-copy", () => CopyCode());
         }
 
         private void CallOnAllReady()
@@ -105,6 +124,12 @@ namespace Namespace_UILobby
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(action);
             }
+        }
+
+        public void CopyCode()
+        {
+            GUIUtility.systemCopyBuffer = roomId;
+            Debug.Log("<color=green>CODE COPIED");
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Namespace_UIMainMenu
 
         public void OnMainMenuExit()
         {
-            // 1. Hide All
+            // Hide All
             _ui.IHide(UI_MAIN);
             _ui.IHide(UI_BROWSE);
             _ui.IHide(UI_CREATE);
@@ -60,9 +60,6 @@ namespace Namespace_UIMainMenu
             _ui.IHide(UI_CREATE);
             _ui.IHide(UI_LOADING);
             _ui.IShow(UI_MAIN);
-
-
-
 
             BindButton(UI_MAIN, "btn-browse", () =>
             {
