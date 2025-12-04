@@ -283,18 +283,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1669970476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6115436432470953571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31b1418005616414b926e4a1622c5537, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1987228541
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,19 +396,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018749c98c25d47418932e090d8f8fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentProvider: {fileID: 1669970476}
+  currentProvider: {fileID: 6115436432470953572}
   createRoomArgs:
-    maxPlayers: 5
+    maxPlayers: 4
     roomProperties:
       keys:
-      - PurrNet
+      - Aegis
       values:
       - IsTheBest
       stringKeys: []
       stringValues: []
   searchRoomArgs:
     keys:
-    - PurrNet
+    - Aegis
     values:
     - IsTheBest
     stringKeys: []
@@ -595,7 +583,7 @@ GameObject:
   - component: {fileID: 3633963466321028331}
   - component: {fileID: 2600720516951557442}
   - component: {fileID: 5630971016259659567}
-  - component: {fileID: 1669970476}
+  - component: {fileID: 6115436432470953572}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -603,6 +591,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6115436432470953572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115436432470953571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31b1418005616414b926e4a1622c5537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

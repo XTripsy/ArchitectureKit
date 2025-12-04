@@ -266,9 +266,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1053027059}
   - component: {fileID: 1053027058}
-  - component: {fileID: 1053027057}
-  - component: {fileID: 1053027061}
   - component: {fileID: 1053027062}
+  - component: {fileID: 1053027063}
+  - component: {fileID: 1053027064}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -276,25 +276,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1053027057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053027056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc64ff707d914a64e95f2ac0bf554c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _automaticCloudSetups:
-    _adaptToEdgegap: 1
-  _serverPort: 5000
-  _maxConnections: 100
-  _address: 127.0.0.1
-  _timeoutInSeconds: 5
-  _pollEventsInUpdate: 0
 --- !u!114 &1053027058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +293,7 @@ MonoBehaviour:
   _startClientFlags: 0
   _cookieScope: 1
   _dontDestroyOnLoad: 0
-  _transport: {fileID: 1053027057}
+  _transport: {fileID: 1053027064}
   _networkPrefabs: {fileID: 11400000, guid: 22009969f1dcf5e4c955dc9401a59da0, type: 2}
   _networkAssets: {fileID: 11400000, guid: 28d4ccd157dfa0a49939594d940410b3, type: 2}
   _networkRules: {fileID: 11400000, guid: 57ad4cc976c21074181652c4f7179d44, type: 2}
@@ -335,18 +316,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1053027061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053027056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5c476fd9733ed148b4631bd99c76108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1053027062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,6 +334,37 @@ MonoBehaviour:
   - {fileID: 1192769514}
   - {fileID: 1871232696}
   - {fileID: 1989902036}
+--- !u!114 &1053027063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053027056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccf31b03f4cfab4a819691c10676d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1053027064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053027056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc64ff707d914a64e95f2ac0bf554c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _automaticCloudSetups:
+    _adaptToEdgegap: 1
+  _serverPort: 5000
+  _maxConnections: 100
+  _address: 127.0.0.1
+  _timeoutInSeconds: 5
+  _pollEventsInUpdate: 0
 --- !u!1 &1192769513
 GameObject:
   m_ObjectHideFlags: 0
