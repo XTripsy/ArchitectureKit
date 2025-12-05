@@ -59,7 +59,7 @@ namespace PurrNet.StateMachine
         /// Override this to control whether the state can be entered
         /// </summary>
         public virtual bool CanEnter() => true;
-        
+
         /// <summary>
         /// Override this to control whether the state can be exited
         /// </summary>
@@ -75,7 +75,7 @@ namespace PurrNet.StateMachine
         public virtual void Enter(T data)
         {
         }
-        
+
         /// <summary>
         /// This is called when the state is entered.
         /// </summary>
@@ -84,7 +84,7 @@ namespace PurrNet.StateMachine
         public virtual void Enter(T data, bool asServer)
         {
         }
-        
+
         /// <summary>
         /// Override this to control whether the state can be entered
         /// </summary>

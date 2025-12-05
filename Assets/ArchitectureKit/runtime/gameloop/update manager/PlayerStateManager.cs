@@ -14,6 +14,6 @@ public sealed class PlayerStateManager : IUpdateManager
 
     public void IUpdate(float deltatime)
     {
-        Debug.Log("Update Player State Manager");
+        // Debug.Log("Update Player State Manager");
     }
 }

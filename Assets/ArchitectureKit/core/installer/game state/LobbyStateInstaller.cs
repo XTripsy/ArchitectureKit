@@ -26,18 +26,6 @@ namespace Namespace_StateLobby
             IObjectManager objectManager = installer.IResolve<IObjectManager>();
             LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
 
-            // spawner initialization karena beda scene
-            bus.ISubscribe<LevelLoad>(e =>
-            {
-                if (e.level != "lobby_scene") return;
-
-                NetworkPlayerSpawner spawner = Object.FindFirstObjectByType<NetworkPlayerSpawner>();
-                if (spawner != null)
-                    spawner.Init(bus);
-                else
-                    Debug.Log("<color=red>spawner is null");
-            });
-
             state.IRegister(name_state, new LobbyState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);

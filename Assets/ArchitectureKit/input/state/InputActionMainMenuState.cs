@@ -18,9 +18,9 @@ namespace Namespace_InputMainMenu
             _bus = bus;
         }
 
-        public void PlayMainMenu()
+        public void CreateRoomMainMenu()
         {
-            _bus.IPublish(new LevelRequest("lobby_scene"));
+            _bus.IPublish(new LevelRequest("gameplay_scene"));
             _bus.IPublish(new RequestStateEnter("lobby_state"));
         }
 
@@ -31,7 +31,7 @@ namespace Namespace_InputMainMenu
 
         public void JoinMainMenu()
         {
-            _bus.IPublish(new LevelRequest("lobby_scene"));
+            _bus.IPublish(new LevelRequest("gameplay_scene"));
             _bus.IPublish(new RequestStateEnter("lobby_state"));
         }
     }

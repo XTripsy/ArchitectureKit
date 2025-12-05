@@ -131,7 +131,7 @@ namespace Namespace_UIMainMenu
         {
             // Successful join -> Request transition to Lobby State
             _bus.IPublish(new RequestStateEnter("lobby_state"));
-            _bus.IPublish(new LevelRequest("lobby_scene"));
+            _bus.IPublish(new LevelRequest("gameplay_scene"));
             Debug.Log("<color=green>Room Joined");
         }
 

@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using PurrLobby;
 using UnityEngine;
 using UnityEngine.UI;
@@ -92,8 +92,8 @@ namespace Namespace_UILobby
         {
             var roomGo = _ui.IGet(UI_ROOM);
             if (!roomGo || !roomGo.activeInHierarchy) return;
-
             // Update Member List using your existing helper script
+
             var memberList = roomGo.GetComponentInChildren<LobbyMemberList>();
             if (memberList) memberList.LobbyDataUpdate(lobby);
 
@@ -110,7 +110,7 @@ namespace Namespace_UILobby
         {
             Debug.Log("<color=green>OnAllReady");
             _bus.IPublish(new RequestStateEnter("gameplay_state"));
-            _bus.IPublish(new LevelRequest("gameplay_scene"));
+            // _bus.IPublish(new LevelRequest("gameplay_scene"));
         }
 
         #endregion

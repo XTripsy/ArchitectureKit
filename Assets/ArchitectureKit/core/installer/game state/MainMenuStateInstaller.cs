@@ -44,7 +44,7 @@ namespace Namespace_StateMainMenu
         private void _InstallInputAction(IEventBus bus)
         {
             InputActionMainMenuState temp_input = new InputActionMainMenuState(bus);
-            bus.ISubscribe<ActionPlayMainMenuState>(_ => temp_input.PlayMainMenu());
+            bus.ISubscribe<ActionPlayMainMenuState>(_ => temp_input.CreateRoomMainMenu());
             bus.ISubscribe<ActionBrowseMainMenuState>(_ => temp_input.JoinMainMenu());
         }
 

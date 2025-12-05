@@ -6,6 +6,9 @@ using Namespace_Spawner.Player;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using Namespace_Level;
+using PurrLobby;
+using System.Collections.Generic;
+using PurrNet.StateMachine;
 
 namespace Namespace_StateGameplay
 {
@@ -20,21 +23,19 @@ namespace Namespace_StateGameplay
             IStateRegistry state = installer.IGetStateRegistry;
             IInputManager input = installer.IResolve<IInputManager>();
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
+            LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
 
+            bus.ISubscribe<LevelLoad>(e =>
+            {
+                if (e.level != "gameplay_scene") return;
+                CustomStateNode[] stateNodes = Object.FindObjectsByType<CustomStateNode>(FindObjectsSortMode.None);
 
-            // spawner initialization karena beda scene
-            // bus.ISubscribe<LevelLoad>(e =>
-            // {
-            //     if (e.level != "gameplay_scene") return;
-            //     Debug.Log("<color=blue>Network Spawner Installed");
-            //     NetworkPlayerSpawner spawner = Object.FindFirstObjectByType<NetworkPlayerSpawner>();
-            //     if (spawner != null)
-            //     {
-            //         spawner.Init(bus);
-            //     }
-            //     else
-            //         Debug.Log("<color=red>spawner is null");
-            // });
+                foreach (var stateNode in stateNodes)
+                {
+                    Debug.Log($"<color=yellow>{stateNode.gameObject.name} Initialized");
+                    stateNode?.Init(bus, lobbyManager);
+                }
+            });
 
             state.IRegister(name_state, new GameplayState(bus));
 
