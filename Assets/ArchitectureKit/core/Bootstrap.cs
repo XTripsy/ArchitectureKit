@@ -2,6 +2,7 @@ using UnityEngine;
 using Namespace_GameLoop;
 using Namespace_Input;
 using Namespace_Level;
+using Namespace_Level_Event;
 using Namespace_UI;
 using Namespace_StateMainMenu;
 using Namespace_StateLobby;

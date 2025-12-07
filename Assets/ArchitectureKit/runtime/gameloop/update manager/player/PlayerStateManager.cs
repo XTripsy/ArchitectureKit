@@ -13,7 +13,7 @@ namespace Namespace_PlayerState
     {
         private Dictionary<string, IPlayerStateMachine> _stateMachine = new();
 
-        public void IStart()    
+        public void IStart()
         {
             Debug.Log("Start Player State Manager");
         }

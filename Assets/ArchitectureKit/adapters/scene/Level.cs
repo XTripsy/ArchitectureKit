@@ -1,4 +1,4 @@
-namespace Namespace_Level
+namespace Namespace_Level_Event
 {
     internal readonly struct LevelRequest : IEvent
     {

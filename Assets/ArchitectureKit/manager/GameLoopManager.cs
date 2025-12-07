@@ -32,6 +32,13 @@ namespace Namespace_GameLoop
             _activeUpdateManagers.Remove(name);
         }
 
+        public IUpdateManager IGetManager(string name)
+        {
+            if (!_listUpdateManagers.ContainsKey(name)) return null;
+
+            return _listUpdateManagers[name];
+        }
+
         public void IUpdate()
         {
             if (_activeUpdateManagers.Count == 0) return;

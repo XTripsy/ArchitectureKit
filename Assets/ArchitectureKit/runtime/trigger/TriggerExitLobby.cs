@@ -4,7 +4,15 @@ using UnityEngine;
 
 namespace Namespace_ExitLobby_Event
 {
-    internal readonly struct ExitLobbyPlayer : IEvent { }
+    internal readonly struct ExitLobbyPlayer : IEvent 
+    {
+        public readonly Collider collider;
+
+        public ExitLobbyPlayer(Collider collider)
+        {
+            this.collider = collider;
+        }
+    }
 }
 
 namespace Namespace_Trigger
@@ -14,6 +22,7 @@ namespace Namespace_Trigger
         private string _nameEvent;
         private readonly IEventBus _bus;
         private bool _bIsActive;
+        private Collider _collider;
 
         public TriggerExitLobby(IEventBus bus)
         {
@@ -29,19 +38,21 @@ namespace Namespace_Trigger
         {
             if (enter.nameEvent != _nameEvent) return;
             _bIsActive = true;
+            _collider = enter.collider;
         }
 
         private void TriggerExit(TriggerExit exit)
         {
             if (exit.nameEvent != _nameEvent) return;
             _bIsActive = false;
+            _collider = null;
         }
 
         private void Interact()
         {
             if (!_bIsActive) return;
 
-            _bus.IPublish(new ExitLobbyPlayer());
+            _bus.IPublish(new ExitLobbyPlayer(_collider));
             Debug.LogWarning("INTERACT KOTOL");
         }
     }

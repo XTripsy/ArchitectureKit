@@ -1,6 +1,6 @@
 ﻿using Namespace_ActionSpawnPlayer_Event;
 using Namespace_ExitLobby_Event;
-using Namespace_PlayerState;
+using UnityEngine;
 
 namespace Namespace_ActionSpawnPlayer_Event
 {
@@ -12,31 +12,32 @@ namespace Namespace_ActionSpawnPlayer
 {
     internal sealed class ActionPlayer
     {
-        IEventBus _bus;
-        IGameLoopManager _gameLoopManager;
-        IObjectManager _objectManager;
+        private IEventBus _bus;
+        private IGameLoopManager _gameLoopManager;
 
-        public ActionPlayer(IEventBus bus, IGameLoopManager gameLoopManager, IObjectManager objectManager)
+        public ActionPlayer(IEventBus bus, IGameLoopManager gameLoopManager)
         {
             _bus = bus;
             _gameLoopManager = gameLoopManager;
-            _objectManager = objectManager;
 
             _bus.ISubscribe<ActionSpawnPlayer>(_ => _SpawnPlayer());
-            _bus.ISubscribe<ExitLobbyPlayer>(_ => _DeSpawnPlayer());
-            //_bus.ISubscribe<ActionDeSpawnPlayer>(_ => _DeSpawnPlayer());
+            _bus.ISubscribe<ExitLobbyPlayer>(_DeSpawnPlayer);
         }
 
         private void _SpawnPlayer()
         {
-            _objectManager.IActive("player");
-            //_gameLoopManager.IActivate("player_state_manager");
+            _gameLoopManager.IActivate("player_state_manager");
         }
 
-        private void _DeSpawnPlayer()
+        private void _DeSpawnPlayer(ExitLobbyPlayer player)
         {
-            _objectManager.IDeActive("player");
-            //_gameLoopManager.IDeActivate("player_state_manager");
+            string name = player.collider.transform.name;
+            int index = name.LastIndexOf('-');
+            string id = name.Substring(index + 1);
+
+            IPlayerStateManager temp = _gameLoopManager.IGetManager("player_state_manager") as IPlayerStateManager;
+            temp.IRemoveStateMachine("player_state-" + id);
+            GameObject.Destroy(player.collider.gameObject);
         }
     }
 }

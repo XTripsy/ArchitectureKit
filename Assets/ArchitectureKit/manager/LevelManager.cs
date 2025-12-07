@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Namespace_Level;
+using Namespace_Level_Event;
 
 namespace Namespace_Level
 {

@@ -62,5 +62,20 @@ namespace Namespace_Object
             go.layer = LayerMask.NameToLayer(e.layer);
             go.transform.localScale = e.myTransform.scale;
         }
+
+        public GameObject IDuplicateSpawn(string name, int id)
+        {
+            if (_inst.TryGetValue(name, out var existing) && existing) return existing;
+            if (!_prefabs.TryGetValue(name, out var entry) || !entry.prefab) return null;
+
+            FactoryComponent.Args temp = new FactoryComponent.Args(entry.prefab, _group.parent,
+                FactoryComponent.EType.eTransform, entry.myTransform.position, entry.myTransform.rotation);
+            existing = _factory.Create(temp);
+            existing.gameObject.name = name+"-"+id;
+            existing.gameObject.SetActive(true);
+            _ApplyGameObjectOptions(existing, name);
+
+            return existing;
+        }
     }
 }
