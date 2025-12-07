@@ -5,70 +5,7 @@ using PurrNet.StateMachine;
 
 public abstract class CustomStateNode : StateNode
 {
-    // protected StateMachine machine { get; private set; }
-    // public bool isCurrentState => machine && machine.currentStateNode == this;
-
     public virtual void Init(IEventBus bus, LobbyManager lobbyManager) { }
-
-    // public void Setup(StateMachine stateMachine)
-    // {
-    //     machine = stateMachine;
-    // }
-
-    // /// <summary>
-    // /// This is called when the state is entered.
-    // /// </summary>
-    // public virtual void Enter()
-    // {
-    // }
-
-    // /// <summary>
-    // /// This is called when the state is entered.
-    // /// </summary>
-    // /// <param name="asServer">Whether you are acting as server or client</param>
-    // public virtual void Enter(bool asServer)
-    // {
-    // }
-
-    // /// <summary>
-    // /// This is like the update loop, which only runs when the state is active.
-    // /// </summary>
-    // public virtual void StateUpdate()
-    // {
-    // }
-
-    // /// <summary>
-    // /// This is like the update loop, which only runs when the state is active.
-    // /// </summary>
-    // /// <param name="asServer">Whether you are acting as server or client</param>
-    // public virtual void StateUpdate(bool asServer)
-    // {
-    // }
-
-    // /// <summary>
-    // /// This is called when the state is exited
-    // /// </summary>
-    // public virtual void Exit()
-    // {
-    // }
-
-    // /// <summary>
-    // /// This is called when the state is exited
-    // /// </summary>
-    // /// <param name="asServer">Whether you are acting as server or client</param>
-    // public virtual void Exit(bool asServer)
-    // {
-    // }
-
-    // /// <summary>
-    // /// Override this to control whether the state can be entered
-    // /// </summary>
-    // public virtual bool CanEnter() => true;
-
-    // /// <summary>
-    // /// Override this to control whether the state can be exited
-    // /// </summary>
-    // public virtual bool CanExit() => true;
 }
 
 

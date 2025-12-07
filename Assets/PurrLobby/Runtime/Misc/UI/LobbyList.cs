@@ -14,7 +14,7 @@ namespace PurrLobby
         {
             foreach (Transform child in content)
                 Destroy(child.gameObject);
-            
+
             foreach (var room in rooms)
             {
                 var entry = Instantiate(lobbyEntryPrefab, content);

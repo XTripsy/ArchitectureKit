@@ -89,11 +89,17 @@ namespace Namespace_UIMainMenu
             _ui.IShow(UI_CREATE);
 
             BindButton(UI_CREATE, "btn-cancel", ShowMainScreen);
+            BindButton(UI_CREATE, "btn-type", SetLobbyStypeOption); // method belum di set logicnya
             BindButton(UI_CREATE, "btn-confirm", () =>
             {
                 _ui.IShow(UI_LOADING);
                 _lobbyManager.CreateRoom();
             });
+        }
+
+        private void SetLobbyStypeOption()
+        {
+
         }
 
         private void JoinRoom()
@@ -120,7 +126,7 @@ namespace Namespace_UIMainMenu
             if (!browseGo) return;
 
             // Use the existing LobbyList script on the prefab to populate UI
-            var listScript = browseGo.GetComponentInChildren<LobbyList>();
+            var listScript = browseGo.GetComponentInChildren<CustomLobbyList>();
             if (listScript)
             {
                 listScript.Populate(lobbies);

@@ -50,7 +50,6 @@ namespace PurrLobby
         private LobbyDataHolder _lobbyDataHolder;
 
         private bool IsStarting = false;
-
         private void Awake()
         {
             _lastKnownState = new Lobby { IsValid = false };

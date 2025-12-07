@@ -7,11 +7,13 @@ using UnityEngine;
 
 public class PlayerEnterLobbyState : CustomStateNode
 {
-    [SerializeField] private NetworkIdentity playerPrefab;
-    [SerializeField] private List<Transform> spawnPoints = new();
+    [SerializeField] private NetworkIdentity _playerPrefab;
+    [SerializeField] private List<Transform> _spawnPoints = new();
 
+    private List<NetworkIdentity> _spawnedPrefabs = new();
     private IEventBus _bus;
     private LobbyManager _lobbyManager;
+    private int currentSpawnIndex = 0;
 
     public override void Init(IEventBus bus, LobbyManager lobbyManager)
     {
@@ -22,35 +24,46 @@ public class PlayerEnterLobbyState : CustomStateNode
     public override void Enter(bool asServer)
     {
         base.Enter(asServer);
-        if (!asServer) return;
 
+        if (!asServer) return;
         _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
-        ResetPlayerState();
-        SpawnPlayers();
+        StartCoroutine(SpawnNewPlayer());
     }
 
+    private void CallOnAllReady()
+    {
+        Debug.Log("<color=green>PlayerEnterLobbyState class : All Ready");
+        machine.Next();
+    }
+
+    [ServerRpc(requireOwnership: false)]
     private void SpawnPlayers()
     {
-        int currentSpawnIndex = 0;
-        Transform spawnPoint = spawnPoints[currentSpawnIndex];
-        NetworkIdentity newPlayer = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
-        newPlayer.GiveOwnership(networkManager.localPlayer);
+        Transform spawnPoint = _spawnPoints[currentSpawnIndex];
+        NetworkIdentity newPlayer = Instantiate(_playerPrefab, spawnPoint.position, spawnPoint.rotation);
+        newPlayer.GiveOwnership(localPlayer);
+        _spawnedPrefabs.Add(newPlayer);
         currentSpawnIndex++;
 
-        if (currentSpawnIndex >= spawnPoints.Count)
+        if (currentSpawnIndex >= _spawnPoints.Count)
         {
             currentSpawnIndex = 0;
         }
     }
 
-    private void CallOnAllReady()
+    private IEnumerator SpawnNewPlayer()
     {
-        machine.Next();
-    }
+        while (true)
+        {
+            int missing = networkManager.players.Count - _spawnedPrefabs.Count;
+            Debug.Log($"missing : {missing} ");
 
-    private void ResetPlayerState()
-    {
-        Debug.LogWarning("Reset Player State in Game");
+            for (int i = 0; i < missing; i++)
+            {
+                SpawnPlayers();
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     public override void Exit(bool asServer)
@@ -58,6 +71,7 @@ public class PlayerEnterLobbyState : CustomStateNode
         base.Exit(asServer);
 
         _lobbyManager.OnAllReady.RemoveListener(CallOnAllReady);
+        StopCoroutine(SpawnNewPlayer());
     }
 
 }
