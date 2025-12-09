@@ -29,14 +29,12 @@ namespace Namespace_UILobby
         {
             Debug.Log("Entered lobby state");
 
-            // 1. Subscribe to LobbyManager events
             _lobbyManager.OnRoomLeft.AddListener(CallOnRoomLeft);
             _lobbyManager.OnRoomUpdated.AddListener(CallOnRoomUpdated);
             _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
-            // 2. Show the Room UI
+
             _ui.IShow(UI_ROOM);
 
-            // 3. Update UI immediately if data exists
             if (_lobbyManager.CurrentLobby.IsValid)
             {
                 UpdateRoomUI(_lobbyManager.CurrentLobby);
@@ -76,11 +74,8 @@ namespace Namespace_UILobby
 
         private void CallOnRoomLeft()
         {
-            // When we leave the room (logic handled by LobbyManager), we transition back to Main Menu state
             _bus.IPublish(new RequestStateEnter("mainmenu_state"));
             _bus.IPublish(new LevelRequest("mainmenu_scene"));
-            // Note: Depending on your StateMachine implementation, you might use 'RequestStateEnter("mainmenu_state")' instead
-            // But based on your imports, this event seems to trigger the flow.
         }
 
         private void CallOnRoomUpdated(Lobby lobby)

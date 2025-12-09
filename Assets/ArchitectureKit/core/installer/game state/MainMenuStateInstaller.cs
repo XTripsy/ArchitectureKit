@@ -24,22 +24,6 @@ namespace Namespace_StateMainMenu
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
             LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
 
-            bus.ISubscribe<LevelLoad>(e =>
-            {
-                if (e.level != "mainmenu_scene") return;
-                CustomLobbyList list = Object.FindFirstObjectByType<CustomLobbyList>();
-
-                if (!list)
-                {
-                    Debug.LogWarning("lobby list null, initializing browse ui first");
-                    ui.IShow("ui-lobby-browse");
-                    ui.IHide("ui-lobby-browse");
-                    list = Object.FindFirstObjectByType<CustomLobbyList>();
-                    list?.Init(bus, lobbyManager);
-                }
-                list?.Init(bus, lobbyManager);
-            });
-
             state.IRegister(name_state, new MainMenuState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);

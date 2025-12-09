@@ -81,6 +81,24 @@ namespace Namespace_UIMainMenu
 
             BindButton(UI_BROWSE, "btn-back", ShowMainScreen);
             BindButton(UI_BROWSE, "btn-refresh", () => _lobbyManager.SearchLobbies());
+
+
+            // Subscribe to CustomLobbyList
+            _bus.ISubscribe<LevelLoad>(e =>
+            {
+                if (e.level != "mainmenu_scene") return;
+                CustomLobbyList list = Object.FindFirstObjectByType<CustomLobbyList>();
+
+                if (list == null)
+                {
+                    Debug.LogWarning("lobby list null, initializing browse ui first");
+                    _ui.IShow("ui-lobby-browse");
+                    _ui.IHide("ui-lobby-browse");
+                    list = Object.FindFirstObjectByType<CustomLobbyList>();
+                    list.Init(_bus, _lobbyManager);
+                }
+                list?.Init(_bus, _lobbyManager);
+            });
         }
 
         private void ShowCreateScreen()
@@ -89,7 +107,7 @@ namespace Namespace_UIMainMenu
             _ui.IShow(UI_CREATE);
 
             BindButton(UI_CREATE, "btn-cancel", ShowMainScreen);
-            BindButton(UI_CREATE, "btn-type", SetLobbyStypeOption); // method belum di set logicnya
+            // BindButton(UI_CREATE, "btn-type", SetLobbyStypeOption); // method belum di set logicnya
             BindButton(UI_CREATE, "btn-confirm", () =>
             {
                 _ui.IShow(UI_LOADING);

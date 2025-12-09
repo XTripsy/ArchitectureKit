@@ -18,8 +18,6 @@ public class CustomLobbyList : MonoBehaviour
 
     public void Populate(List<Lobby> rooms)
     {
-        if (_lobbyManager == null)
-            Debug.LogError("LobbyManager IS NULL");
         foreach (Transform child in _content)
             Destroy(child.gameObject);
 

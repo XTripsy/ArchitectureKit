@@ -3,6 +3,7 @@ using Namespace_InputPause;
 using Namespace_InputPause_Event;
 using Namespace_StatePause_Event;
 using Namespace_UIPause;
+using PurrLobby;
 using UnityEngine.InputSystem;
 
 namespace Namespace_StatePause
@@ -18,12 +19,13 @@ namespace Namespace_StatePause
             IStateRegistry state = installer.IGetStateRegistry;
             IInputManager input = installer.IResolve<IInputManager>();
             IUIManager ui = installer.IResolve<IUIManager>();
+            LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
 
             state.IRegister(name_state, new PauseState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);
             _InstallInputAction(bus);
-            _InstallUI(bus, ui);
+            _InstallUI(bus, ui, lobbyManager);
         }
 
         private void _InstallInput(IBootstrapContext installer, IEventBus bus, IInputManager input, string name_mapping)
@@ -44,9 +46,9 @@ namespace Namespace_StatePause
             bus.ISubscribe<ActionResumePauseState>(_ => temp_input.ResumePause());
         }
 
-        private void _InstallUI(IEventBus bus, IUIManager ui)
+        private void _InstallUI(IEventBus bus, IUIManager ui, LobbyManager lm)
         {
-            UIActionPauseState temp_ui = new UIActionPauseState(bus, ui);
+            UIActionPauseState temp_ui = new UIActionPauseState(bus, ui, lm);
             bus.ISubscribe<PauseStateEnter>(_ => temp_ui.OnPauseEnter());
             bus.ISubscribe<PauseStateExit>(_ => temp_ui.OnPauseExit());
         }
