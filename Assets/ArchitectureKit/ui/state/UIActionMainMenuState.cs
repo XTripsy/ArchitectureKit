@@ -82,7 +82,11 @@ namespace Namespace_UIMainMenu
             BindButton(UI_BROWSE, "btn-back", ShowMainScreen);
             BindButton(UI_BROWSE, "btn-refresh", () => _lobbyManager.SearchLobbies());
 
+            NewMethod();
+        }
 
+        private void NewMethod()
+        {
             // Subscribe to CustomLobbyList
             _bus.ISubscribe<LevelLoad>(e =>
             {
@@ -107,17 +111,13 @@ namespace Namespace_UIMainMenu
             _ui.IShow(UI_CREATE);
 
             BindButton(UI_CREATE, "btn-cancel", ShowMainScreen);
-            // BindButton(UI_CREATE, "btn-type", SetLobbyStypeOption); // method belum di set logicnya
             BindButton(UI_CREATE, "btn-confirm", () =>
             {
                 _ui.IShow(UI_LOADING);
                 _lobbyManager.CreateRoom();
             });
-        }
 
-        private void SetLobbyStypeOption()
-        {
-
+            // BindButton(UI_CREATE, "btn-type", SetLobbyStypeOption); // method belum di set logicnya
         }
 
         private void JoinRoom()
@@ -143,7 +143,6 @@ namespace Namespace_UIMainMenu
             var browseGo = _ui.IGet(UI_BROWSE);
             if (!browseGo) return;
 
-            // Use the existing LobbyList script on the prefab to populate UI
             var listScript = browseGo.GetComponentInChildren<CustomLobbyList>();
             if (listScript)
             {
@@ -170,7 +169,6 @@ namespace Namespace_UIMainMenu
 
         private void BindButton(string uiName, string buttonName, UnityEngine.Events.UnityAction action)
         {
-            // Get all buttons in the UI canvas/panel
             var allButtons = _ui.IGetAllComponentInUI<Button>(uiName);
 
             if (allButtons == null)
@@ -179,14 +177,13 @@ namespace Namespace_UIMainMenu
                 return;
             }
 
-            // Iterate to find the one with the matching name
             foreach (var btn in allButtons)
             {
                 if (btn.gameObject.name == buttonName)
                 {
                     btn.onClick.RemoveAllListeners();
                     btn.onClick.AddListener(action);
-                    return; // Found and bound, exit method
+                    return;
                 }
             }
 

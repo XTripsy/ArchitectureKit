@@ -26,6 +26,21 @@ namespace Namespace_StateLobby
             IObjectManager objectManager = installer.IResolve<IObjectManager>();
             LobbyManager lobbyManager = installer.IResolve<LobbyManager>();
 
+            bus.ISubscribe<LevelLoad>(e =>
+            {
+                if (e.level != "gameplay_scene") return;
+                CustomFriendList friendList = Object.FindFirstObjectByType<CustomFriendList>();
+                if (friendList == null)
+                {
+                    Debug.LogError("Friend List is null");
+                }
+                else
+                {
+                    Debug.Log("<color=green> FRIEND LIST FOUND");
+                    friendList.Init(bus, lobbyManager);
+                }
+            });
+
             state.IRegister(name_state, new LobbyState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);

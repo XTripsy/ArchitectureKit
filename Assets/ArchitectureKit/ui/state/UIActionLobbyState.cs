@@ -3,10 +3,7 @@ using PurrLobby;
 using UnityEngine;
 using UnityEngine.UI;
 using Namespace_Level;
-using System.Collections;
-using Namespace_StateLobby_Event;
 using System.Collections.Generic;
-using Namespace_StateMainMenu_Event;
 
 namespace Namespace_UILobby
 {
@@ -32,6 +29,8 @@ namespace Namespace_UILobby
             _lobbyManager.OnRoomLeft.AddListener(CallOnRoomLeft);
             _lobbyManager.OnRoomUpdated.AddListener(CallOnRoomUpdated);
             _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
+            _lobbyManager.OnFriendListPulled.AddListener(CallOnFriendsListPulled);
+
 
             _ui.IShow(UI_ROOM);
 
@@ -41,7 +40,6 @@ namespace Namespace_UILobby
             }
         }
 
-
         public void OnLobbyExit()
         {
             // 1. Hide UI
@@ -50,7 +48,8 @@ namespace Namespace_UILobby
             // 2. Unsubscribe events
             _lobbyManager.OnRoomLeft.RemoveListener(CallOnRoomLeft);
             _lobbyManager.OnRoomUpdated.RemoveListener(CallOnRoomUpdated);
-            _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
+            _lobbyManager.OnAllReady.RemoveListener(CallOnAllReady);
+            _lobbyManager.OnFriendListPulled.RemoveListener(CallOnFriendsListPulled);
         }
 
         private void LobbyCode()
@@ -66,8 +65,6 @@ namespace Namespace_UILobby
                         break;
                 }
             }
-
-
         }
 
         #region EVENT CALLBACKS
@@ -87,44 +84,63 @@ namespace Namespace_UILobby
         {
             var roomGo = _ui.IGet(UI_ROOM);
             if (!roomGo || !roomGo.activeInHierarchy) return;
-            // Update Member List using your existing helper script
 
             var memberList = roomGo.GetComponentInChildren<LobbyMemberList>();
             if (memberList) memberList.LobbyDataUpdate(lobby);
 
-            //set lobby code
             LobbyCode();
 
-            // Bind Room Buttons
             BindButton(UI_ROOM, "btn-ready", () => _lobbyManager.ToggleLocalReady());
             BindButton(UI_ROOM, "btn-leave", () => _lobbyManager.LeaveLobby());
             BindButton(UI_ROOM, "btn-copy", () => CopyCode());
         }
 
+
         private void CallOnAllReady()
         {
-            Debug.Log("<color=green>OnAllReady");
+            Debug.Log("<color=green>CallOnAllReady : OnAllReady");
             _bus.IPublish(new RequestStateEnter("gameplay_state"));
-            // _bus.IPublish(new LevelRequest("gameplay_scene"));
+        }
+
+        private void CallOnFriendsListPulled(List<FriendUser> list)
+        {
+            var friendsList = _ui.IGetComponentInUI<CustomFriendList>(UI_ROOM, "list-friends");
+
+            if (friendsList != null)
+                friendsList.Populate(list);
+            else
+                Debug.LogError("CallOnFriendsListPulled(): CustomFriendList is null");
         }
 
         #endregion
-
-        // Helper to find button and add listener safely
-        private void BindButton(string uiName, string childPath, UnityEngine.Events.UnityAction action)
-        {
-            var btn = _ui.IGetComponentInUI<Button>(uiName, childPath);
-            if (btn)
-            {
-                btn.onClick.RemoveAllListeners();
-                btn.onClick.AddListener(action);
-            }
-        }
 
         public void CopyCode()
         {
             GUIUtility.systemCopyBuffer = roomId;
             Debug.Log("<color=green>CODE COPIED");
+        }
+
+        private void BindButton(string uiName, string buttonName, UnityEngine.Events.UnityAction action)
+        {
+            var allButtons = _ui.IGetAllComponentInUI<Button>(uiName);
+
+            if (allButtons == null)
+            {
+                Debug.LogWarning($"No buttons found in UI: {uiName}");
+                return;
+            }
+
+            foreach (var btn in allButtons)
+            {
+                if (btn.gameObject.name == buttonName)
+                {
+                    btn.onClick.RemoveAllListeners();
+                    btn.onClick.AddListener(action);
+                    return;
+                }
+            }
+
+            Debug.LogWarning($"Button '{buttonName}' not found in '{uiName}'");
         }
     }
 }

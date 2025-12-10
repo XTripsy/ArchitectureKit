@@ -118,6 +118,7 @@ namespace PurrLobby
 
             _currentProvider.OnLobbyLeft += () => InvokeDelayed(() =>
             {
+                IsStarting = false;
                 _currentLobby = default;
                 OnRoomLeft?.Invoke();
             });
@@ -196,6 +197,7 @@ namespace PurrLobby
                 // 2. THIS WAS MISSING: Tell UI we officially Joined (Trigger State Change)
                 if (room.IsValid)
                 {
+                    IsStarting = false;
                     Debug.Log("Room Created Successfully - Invoking OnRoomJoined");
                     OnRoomJoined?.Invoke(room);
                 }
