@@ -99,7 +99,7 @@ namespace Namespace_UIMainMenu
                     _ui.IShow("ui-lobby-browse");
                     _ui.IHide("ui-lobby-browse");
                     list = Object.FindFirstObjectByType<CustomLobbyList>();
-                    list.Init(_bus, _lobbyManager);
+                    list?.Init(_bus, _lobbyManager);
                 }
                 list?.Init(_bus, _lobbyManager);
             });
