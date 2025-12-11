@@ -242,6 +242,7 @@ namespace PurrLobby
                 var room = await _currentProvider.JoinLobbyAsync(roomId);
                 if (room.IsValid)
                 {
+                    _currentLobby = room;
                     OnRoomJoined?.Invoke(room);
                 }
                 else
