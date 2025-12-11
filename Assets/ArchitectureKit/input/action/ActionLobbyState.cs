@@ -31,7 +31,8 @@ namespace Namespace_InputLobby
 
         public void ICallbackAction()
         {
-            _aActions["action_join"].started += _ => _bus.IPublish(new ActionJoinLobbyState());
+            _aActions["action_ready"].started += _ => _bus.IPublish(new ActionReadyLobbyState());
+            _aActions["action_leave"].started += _ => _bus.IPublish(new ActionLeaveLobbyState());
         }
 
         public void IDisable()

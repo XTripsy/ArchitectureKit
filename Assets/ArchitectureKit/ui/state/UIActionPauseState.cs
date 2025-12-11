@@ -24,24 +24,8 @@ namespace Namespace_UIPause
             _ui.IShow("ui-pause");
             _lobbyManager.OnRoomLeft.AddListener(CallOnRoomLeft);
 
-            var buttons = _ui.IGetAllComponentInUI<Button>(UI_PAUSE);
-            if (buttons == null) return;
-            foreach (var btn in buttons)
-            {
-                btn.onClick.RemoveAllListeners();
-                switch (btn.gameObject.name)
-                {
-                    case "btn-resume":
-                        btn.onClick.AddListener(() => _bus.IPublish(new RequestStateEnter("gameplay_state")));
-                        break;
-                    case "btn-leave":
-                        btn.onClick.AddListener(_lobbyManager.LeaveLobby);
-                        break;
-                }
-            }
-
-            // BindButton(UI_PAUSE, "btn-resume", () => _bus.IPublish(new RequestStateEnter("gameplay_state")));
-            // BindButton(UI_PAUSE, "btn-leave", () => _lobbyManager.LeaveLobby());
+            BindButton(UI_PAUSE, "btn-resume", () => _bus.IPublish(new RequestStateEnter("gameplay_state")));
+            BindButton(UI_PAUSE, "btn-leave", () => _lobbyManager.LeaveLobby());
         }
 
         private void CallOnRoomLeft()

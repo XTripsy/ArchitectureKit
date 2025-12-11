@@ -27,7 +27,7 @@ namespace Namespace_StateMainMenu
             state.IRegister(name_state, new MainMenuState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);
-            _InstallInputAction(bus);
+            _InstallInputAction(bus, lobbyManager);
             _InstallUI(bus, ui, lobbyManager);
         }
 
@@ -43,11 +43,10 @@ namespace Namespace_StateMainMenu
             bus.ISubscribe<MainMenuStateEnter>(_ => input.IActiveActionInput(name_mapping));
         }
 
-        private void _InstallInputAction(IEventBus bus)
+        private void _InstallInputAction(IEventBus bus, LobbyManager lm)
         {
-            InputActionMainMenuState temp_input = new InputActionMainMenuState(bus);
+            InputActionMainMenuState temp_input = new InputActionMainMenuState(bus, lm);
             bus.ISubscribe<ActionPlayMainMenuState>(_ => temp_input.CreateRoomMainMenu());
-            bus.ISubscribe<ActionBrowseMainMenuState>(_ => temp_input.JoinMainMenu());
         }
 
         private void _InstallUI(IEventBus bus, IUIManager ui, LobbyManager lobbyManager)

@@ -29,4 +29,5 @@ MonoBehaviour:
   - state: lobby_state
     nameMapping: lobby_mapping
     actions:
-    - action_join
+    - action_ready
+    - action_leave

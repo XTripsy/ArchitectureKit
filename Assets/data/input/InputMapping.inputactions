@@ -111,9 +111,18 @@
             "id": "9b7673a0-254c-402a-b04a-3b3b8d9c8f05",
             "actions": [
                 {
-                    "name": "action_join",
+                    "name": "action_ready",
                     "type": "Button",
                     "id": "fca1cad6-4803-4cb3-9c34-20b88097321d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "action_leave",
+                    "type": "Button",
+                    "id": "8d4be737-16b9-4a98-99b8-42bbc0bb9da0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -128,7 +137,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "action_join",
+                    "action": "action_ready",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a567b733-ec36-4716-be39-5c1ad638ff1f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "action_leave",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

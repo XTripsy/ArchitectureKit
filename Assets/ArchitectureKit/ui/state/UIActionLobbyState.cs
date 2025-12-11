@@ -71,6 +71,7 @@ namespace Namespace_UILobby
 
         private void CallOnRoomLeft()
         {
+            Debug.Log("<color=red>RoomLeft");
             _bus.IPublish(new RequestStateEnter("mainmenu_state"));
             _bus.IPublish(new LevelRequest("mainmenu_scene"));
         }

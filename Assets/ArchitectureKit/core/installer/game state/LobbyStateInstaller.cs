@@ -44,7 +44,7 @@ namespace Namespace_StateLobby
             state.IRegister(name_state, new LobbyState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);
-            _InstallInputAction(bus);
+            _InstallInputAction(bus, lobbyManager);
             _InstallUI(bus, ui, lobbyManager);
             _InstallObject(bus, gameLoopManager, objectManager);
         }
@@ -61,10 +61,11 @@ namespace Namespace_StateLobby
             bus.ISubscribe<LobbyStateEnter>(_ => input.IActiveActionInput(name_mapping));
         }
 
-        private void _InstallInputAction(IEventBus bus)
+        private void _InstallInputAction(IEventBus bus, LobbyManager lm)
         {
-            InputActionLobbyState temp_input = new InputActionLobbyState(bus);
-            bus.ISubscribe<ActionJoinLobbyState>(_ => temp_input.JoinLobby());
+            InputActionLobbyState temp_input = new InputActionLobbyState(bus, lm);
+            bus.ISubscribe<ActionReadyLobbyState>(_ => temp_input.ReadyLobby());
+            bus.ISubscribe<ActionLeaveLobbyState>(_ => temp_input.LeaveLobby());
         }
 
         private void _InstallUI(IEventBus bus, IUIManager ui, LobbyManager lobbyManager)

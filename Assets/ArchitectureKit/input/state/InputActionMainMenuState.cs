@@ -1,38 +1,27 @@
 using Namespace_Level;
+using PurrLobby;
 
 namespace Namespace_InputMainMenu_Event
 {
     internal readonly struct ActionPlayMainMenuState : IEvent { }
-    internal readonly struct ActionBrowseMainMenuState : IEvent { }
-    internal readonly struct ActionJoinMainMenuState : IEvent { }
 }
 
 namespace Namespace_InputMainMenu
 {
     internal sealed class InputActionMainMenuState
     {
-        IEventBus _bus;
+        private IEventBus _bus;
+        private LobbyManager _lobbyManager;
 
-        public InputActionMainMenuState(IEventBus bus)
+        public InputActionMainMenuState(IEventBus bus, LobbyManager lm)
         {
             _bus = bus;
+            _lobbyManager = lm;
         }
 
         public void CreateRoomMainMenu()
         {
-            _bus.IPublish(new LevelRequest("gameplay_scene"));
-            _bus.IPublish(new RequestStateEnter("lobby_state"));
-        }
-
-        public void BrowseMainMenu()
-        {
-            _bus.IPublish(new RequestStateEnter("browse_state"));
-        }
-
-        public void JoinMainMenu()
-        {
-            _bus.IPublish(new LevelRequest("gameplay_scene"));
-            _bus.IPublish(new RequestStateEnter("lobby_state"));
+            _lobbyManager.CreateRoom();
         }
     }
 }
