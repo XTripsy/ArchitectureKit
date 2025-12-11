@@ -42,10 +42,8 @@ namespace Namespace_UILobby
 
         public void OnLobbyExit()
         {
-            // 1. Hide UI
             _ui.IHide(UI_ROOM);
 
-            // 2. Unsubscribe events
             _lobbyManager.OnRoomLeft.RemoveListener(CallOnRoomLeft);
             _lobbyManager.OnRoomUpdated.RemoveListener(CallOnRoomUpdated);
             _lobbyManager.OnAllReady.RemoveListener(CallOnAllReady);

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Namespace_StateMainMenu_Event;
 using PurrLobby;
 using System.Collections.Generic;
 using Namespace_Level;
@@ -14,7 +13,6 @@ namespace Namespace_UIMainMenu
         private readonly IUIManager _ui;
         private readonly LobbyManager _lobbyManager;
 
-        // UI IDs from UICatalog
         private const string UI_MAIN = "ui-mainmenu";
         private const string UI_BROWSE = "ui-lobby-browse";
         private const string UI_CREATE = "ui-lobby-create";
@@ -29,30 +27,24 @@ namespace Namespace_UIMainMenu
 
         public void OnMainMenuEnter()
         {
-            // 1. Subscribe to LobbyManager events
             _lobbyManager.OnRoomJoined.AddListener(CallOnRoomJoined);
             _lobbyManager.OnRoomSearchResults.AddListener(CallOnSearchResults);
             _lobbyManager.OnRoomJoinFailed.AddListener(CallOnJoinFailed);
 
-            // 2. Start at Root Screen
             ShowMainScreen();
         }
 
         public void OnMainMenuExit()
         {
-            // Hide All
             _ui.IHide(UI_MAIN);
             _ui.IHide(UI_BROWSE);
             _ui.IHide(UI_CREATE);
             _ui.IHide(UI_LOADING);
 
-            // 2. Unsubscribe
             _lobbyManager.OnRoomJoined.RemoveListener(CallOnRoomJoined);
             _lobbyManager.OnRoomSearchResults.RemoveListener(CallOnSearchResults);
             _lobbyManager.OnRoomJoinFailed.RemoveListener(CallOnJoinFailed);
         }
-
-        // --- Screen Navigation ---
 
         private void ShowMainScreen()
         {
@@ -64,8 +56,7 @@ namespace Namespace_UIMainMenu
             BindButton(UI_MAIN, "btn-browse", () =>
             {
                 ShowBrowseScreen();
-                _lobbyManager.SearchLobbies(); // Auto-search on open
-                Debug.Log("<color=green>searching for lobbies</color>");
+                _lobbyManager.SearchLobbies();
             });
 
             BindButton(UI_MAIN, "btn-create", ShowCreateScreen);
@@ -82,12 +73,11 @@ namespace Namespace_UIMainMenu
             BindButton(UI_BROWSE, "btn-back", ShowMainScreen);
             BindButton(UI_BROWSE, "btn-refresh", () => _lobbyManager.SearchLobbies());
 
-            NewMethod();
+            SetLobbyList();
         }
 
-        private void NewMethod()
+        private void SetLobbyList()
         {
-            // Subscribe to CustomLobbyList
             _bus.ISubscribe<LevelLoad>(e =>
             {
                 if (e.level != "mainmenu_scene") return;
@@ -116,8 +106,6 @@ namespace Namespace_UIMainMenu
                 _ui.IShow(UI_LOADING);
                 _lobbyManager.CreateRoom();
             });
-
-            // BindButton(UI_CREATE, "btn-type", SetLobbyStypeOption); // method belum di set logicnya
         }
 
         private void JoinRoom()
@@ -130,7 +118,6 @@ namespace Namespace_UIMainMenu
                 {
                     case "input-code":
                         _lobbyManager.JoinLobby(inputfield.text);
-                        Debug.Log($"<color=green> joining room {inputfield}");
                         break;
                 }
             }
@@ -152,17 +139,14 @@ namespace Namespace_UIMainMenu
 
         private void CallOnRoomJoined(Lobby lobby)
         {
-            // Successful join -> Request transition to Lobby State
             _bus.IPublish(new RequestStateEnter("lobby_state"));
             _bus.IPublish(new LevelRequest("gameplay_scene"));
-            Debug.Log("<color=green>CallOnRoomJoined : Room Joined");
         }
 
         private void CallOnJoinFailed(string error)
         {
             _ui.IHide(UI_LOADING);
             Debug.LogError($"Join Failed: {error}");
-            // Optional: Show error popup here
         }
 
         #endregion

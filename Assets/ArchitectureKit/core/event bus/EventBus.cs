@@ -9,10 +9,10 @@ public sealed class EventBus : IEventBus
     {
         if (!_events.TryGetValue(typeof(T), out var list)) return;
         
-        foreach (var d in list.ToArray()) ((System.Action<T>)d)?.Invoke(e);
+        foreach (var d in list.ToArray()) ((Action<T>)d)?.Invoke(e);
     }
 
-    public void ISubscribe<T>(System.Action<T> h) where T : IEvent
+    public void ISubscribe<T>(Action<T> h) where T : IEvent
     {
         if (!_events.TryGetValue(typeof(T), out var list)) _events[typeof(T)] = list = new();
         list.Add(h);

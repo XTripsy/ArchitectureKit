@@ -4,7 +4,6 @@ using PurrNet.Logging;
 using PurrNet.Transports;
 using UnityEngine;
 using PurrNet.Steam;
-using Unity.Multiplayer.Playmode;
 using Steamworks;
 using PurrLobby;
 

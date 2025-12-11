@@ -16,7 +16,7 @@ namespace Namespace_StateGameplay
         {
             _bus = temp_bus;
         }
-
+        
         public void IOnEnter()
         {
             _bus.IPublish(new GameplayStateEnter());

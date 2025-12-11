@@ -19,7 +19,6 @@ namespace PurrLobby
         public CreateRoomArgs createRoomArgs = new();
         public SerializableDictionary<string, string> searchRoomArgs = new();
 
-        // These events are empty in Inspector, but FILLED by UIAction scripts via code! (TORA: WE DON't WANT THIS)
         public UnityEvent<Lobby> OnRoomJoined = new UnityEvent<Lobby>();
         public UnityEvent<string> OnRoomJoinFailed = new UnityEvent<string>();
         public UnityEvent OnRoomLeft = new UnityEvent();
@@ -49,7 +48,8 @@ namespace PurrLobby
         public Lobby CurrentLobby => _currentLobby;
         private LobbyDataHolder _lobbyDataHolder;
 
-        private bool IsStarting = false;
+        private bool IsStarting;
+        
         private void Awake()
         {
             _lastKnownState = new Lobby { IsValid = false };

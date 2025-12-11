@@ -7,6 +7,8 @@ using Namespace_UILobby;
 using UnityEngine.InputSystem;
 using PurrLobby;
 using Namespace_Level;
+using PurrNet;
+using PurrNet.Transports;
 using UnityEngine;
 
 namespace Namespace_StateLobby
@@ -29,8 +31,17 @@ namespace Namespace_StateLobby
             bus.ISubscribe<LevelLoad>(e =>
             {
                 if (e.level != "gameplay_scene") return;
+
                 CustomFriendList friendList = Object.FindFirstObjectByType<CustomFriendList>();
                 friendList?.Init(bus, lobbyManager);
+
+                NetworkManager networkManager = Object.FindFirstObjectByType<NetworkManager>();
+                networkManager.onClientConnectionState += (state) =>
+                {
+                    if (state != ConnectionState.Disconnected) return;
+                    bus.IPublish(new RequestStateEnter("mainmenu_state"));
+                    bus.IPublish(new Namespace_Level.LevelRequest("mainmenu_scene"));
+                };
             });
 
             state.IRegister(name_state, new LobbyState(bus));
