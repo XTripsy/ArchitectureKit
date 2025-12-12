@@ -1,10 +1,5 @@
 ﻿using Namespace_InputLobby_Event;
-using Namespace_PlayerController;
-using Namespace_PlayerModulMovement;
 using Namespace_PlayerService;
-using Namespace_StatePause_Event;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Namespace_PlayerState
 {
@@ -15,11 +10,12 @@ namespace Namespace_PlayerState
             IEventBus bus = installer.IGetBus;
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
             IObjectManager objectManager = installer.IResolve<IObjectManager>();
+            IPlayerManager playerManager = installer.IResolve<IPlayerManager>();
 
             IPlayerIdService playerIdService = new PlayerIdService();
-            IPlayerSpawnService playerSpawnService = new PlayerSpawnerService(bus, playerIdService, objectManager, gameLoopManager);
+            IPlayerSpawnService playerSpawnService = new PlayerSpawnerService(bus, playerIdService, objectManager, gameLoopManager, playerManager);
 
-            bus.ISubscribe<ActionJoinLobbyState>(_ => playerSpawnService.ISpawnPlayer());
+            bus.ISubscribe<ActionJoinLobbyState>(playerSpawnService.ISpawnPlayer);
         }
     }
 }

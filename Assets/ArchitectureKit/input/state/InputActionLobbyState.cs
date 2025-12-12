@@ -1,9 +1,17 @@
 ﻿using Namespace_ActionSpawnPlayer_Event;
-using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Namespace_InputLobby_Event
 {
-    internal readonly struct ActionJoinLobbyState : IEvent { }
+    public readonly struct ActionJoinLobbyState : IEvent 
+    {
+        public readonly InputDevice device;
+
+        public ActionJoinLobbyState(InputDevice device)
+        {
+            this.device = device;
+        }
+    }
 }
 
 namespace Namespace_InputLobby

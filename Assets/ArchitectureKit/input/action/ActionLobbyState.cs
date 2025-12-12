@@ -31,7 +31,11 @@ namespace Namespace_InputLobby
 
         public void ICallbackAction()
         {
-            _aActions["action_join"].started += _ => _bus.IPublish(new ActionJoinLobbyState());
+            _aActions["action_join"].started += ctx =>
+            {
+                var device = ctx.control?.device;
+                _bus.IPublish(new ActionJoinLobbyState(device));
+            };
         }
 
         public void IDisable()

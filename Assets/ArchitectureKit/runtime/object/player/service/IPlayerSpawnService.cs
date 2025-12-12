@@ -1,5 +1,7 @@
-﻿public interface IPlayerSpawnService
+﻿using Namespace_InputLobby_Event;
+
+public interface IPlayerSpawnService
 {
-    void ISpawnPlayer();
+    void ISpawnPlayer(ActionJoinLobbyState _event);
     void IDespawnPlayer(int id);
 }
