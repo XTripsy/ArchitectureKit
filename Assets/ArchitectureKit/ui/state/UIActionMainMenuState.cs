@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using PurrLobby;
 using System.Collections.Generic;
 using Namespace_Level;
+using PurrNet;
 using TMPro;
 
 namespace Namespace_UIMainMenu
@@ -39,7 +40,6 @@ namespace Namespace_UIMainMenu
             _ui.IHide(UI_MAIN);
             _ui.IHide(UI_BROWSE);
             _ui.IHide(UI_CREATE);
-            _ui.IHide(UI_LOADING);
 
             _lobbyManager.OnRoomJoined.RemoveListener(CallOnRoomJoined);
             _lobbyManager.OnRoomSearchResults.RemoveListener(CallOnSearchResults);

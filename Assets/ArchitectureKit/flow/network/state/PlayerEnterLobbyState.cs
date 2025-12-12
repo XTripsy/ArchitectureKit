@@ -13,6 +13,7 @@ public class PlayerEnterLobbyState : CustomStateNode
     private SyncList<NetworkIdentity> _spawnedPrefabs = new();
     private IEventBus _bus;
     private LobbyManager _lobbyManager;
+    private IUIManager _ui;
     private int currentSpawnIndex = 0;
 
     public override void Init(IEventBus bus, LobbyManager lobbyManager)

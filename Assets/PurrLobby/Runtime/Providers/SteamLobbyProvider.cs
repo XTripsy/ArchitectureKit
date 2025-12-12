@@ -66,7 +66,7 @@ namespace PurrLobby.Providers
                     return true;
                 }
                 catch
-                {
+                {                    
                     return false;
                 }
             }
@@ -245,6 +245,7 @@ namespace PurrLobby.Providers
 
             if (!await tcs.Task)
             {
+         
                 OnLobbyJoinFailed?.Invoke($"Failed to join lobby {lobbyId}.");
                 return new Lobby { IsValid = false };
             }

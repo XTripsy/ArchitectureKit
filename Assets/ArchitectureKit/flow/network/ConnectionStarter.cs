@@ -11,7 +11,15 @@ public class ConnectionStarter : MonoBehaviour
 {
     private NetworkManager _networkManager;
     private LobbyDataHolder _lobbyDataHolder;
-    private SteamTransport _steamTransport;
+
+    private IEventBus _bus;
+    private IUIManager _ui;
+
+    public void Init(IEventBus bus, IUIManager ui)
+    {
+        _bus = bus;
+        _ui = ui;
+    }
 
     private void Awake()
     {
@@ -19,8 +27,6 @@ public class ConnectionStarter : MonoBehaviour
         {
             PurrLogger.LogError($"Failed to get {nameof(NetworkManager)} component.", this);
         }
-        if (!TryGetComponent<SteamTransport>(out _steamTransport))
-            PurrLogger.LogError($"Failed to get {nameof(SteamTransport)} component", this);
 
         _lobbyDataHolder = FindFirstObjectByType<LobbyDataHolder>();
         if (!_lobbyDataHolder)
@@ -29,7 +35,6 @@ public class ConnectionStarter : MonoBehaviour
 
     private void Start()
     {
-        _networkManager.transport = _steamTransport;
         if (!_networkManager)
         {
             PurrLogger.LogError($"Failed to start connection. {nameof(NetworkManager)} is null!", this);
@@ -39,12 +44,6 @@ public class ConnectionStarter : MonoBehaviour
         if (!_lobbyDataHolder)
         {
             PurrLogger.LogError($"Failed to start connection. {nameof(LobbyDataHolder)} is null!", this);
-            return;
-        }
-
-        if (!_steamTransport)
-        {
-            PurrLogger.LogError($"Failed to start connection. {nameof(SteamTransport)} is null!", this);
             return;
         }
 
@@ -59,23 +58,10 @@ public class ConnectionStarter : MonoBehaviour
             (_networkManager.transport as PurrTransport).roomName = _lobbyDataHolder.CurrentLobby.LobbyId;
         }
 
-        if (!ulong.TryParse(_lobbyDataHolder.CurrentLobby.LobbyId, out ulong ulongId))
-        {
-            Debug.LogError($"Failed to parse lobbyid into ulong", this);
-            return;
-        }
-
-        var lobbyOwner = SteamMatchmaking.GetLobbyOwner(new CSteamID(ulongId));
-        if (!lobbyOwner.IsValid())
-        {
-            Debug.LogError($"FAILED TO GET LOBBY OWNER FROM PARSED LOBBY ID");
-            return;
-        }
-
         if (_lobbyDataHolder.CurrentLobby.IsOwner)
         {
             _networkManager.StartServer();
-            Debug.Log("<color=red> You Are Lobby Owner");
+            Debug.Log("<color=red> you are the HOST");
         }
         StartCoroutine(StartClient());
     }
@@ -84,7 +70,8 @@ public class ConnectionStarter : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         _networkManager.StartClient();
-        Debug.Log("<color=green> You Are The Client in this Lobby");
+        _ui.IHide("ui-loading");
+        Debug.Log("<color=green>you are the CLIENT");
     }
 }
 

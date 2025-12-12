@@ -19,6 +19,7 @@ namespace PurrLobby
         public CreateRoomArgs createRoomArgs = new();
         public SerializableDictionary<string, string> searchRoomArgs = new();
 
+        // Room Events
         public UnityEvent<Lobby> OnRoomJoined = new UnityEvent<Lobby>();
         public UnityEvent<string> OnRoomJoinFailed = new UnityEvent<string>();
         public UnityEvent OnRoomLeft = new UnityEvent();
@@ -182,7 +183,6 @@ namespace PurrLobby
             CreateRoom(createRoomArgs.maxPlayers, createRoomArgs.roomProperties.ToDictionary());
         }
 
-        // --- THE CRITICAL FIX IS HERE ---
         public void CreateRoom(int maxPlayers, Dictionary<string, string> roomProperties = null)
         {
             RunTask(async () =>

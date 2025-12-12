@@ -12,6 +12,7 @@ namespace Namespace_UILobby
         private readonly IUIManager _ui;
         private readonly IEventBus _bus;
         private readonly LobbyManager _lobbyManager;
+
         private const string UI_ROOM = "ui-lobby-room";
         private string roomId;
 
@@ -24,6 +25,7 @@ namespace Namespace_UILobby
 
         public void OnLobbyEnter()
         {
+            _ui.IShow(UI_ROOM);
             Debug.Log("Entered lobby state");
 
             _lobbyManager.OnRoomLeft.AddListener(CallOnRoomLeft);
@@ -31,8 +33,6 @@ namespace Namespace_UILobby
             _lobbyManager.OnAllReady.AddListener(CallOnAllReady);
             _lobbyManager.OnFriendListPulled.AddListener(CallOnFriendsListPulled);
 
-
-            _ui.IShow(UI_ROOM);
 
             if (_lobbyManager.CurrentLobby.IsValid)
             {
@@ -66,13 +66,13 @@ namespace Namespace_UILobby
         }
 
         #region EVENT CALLBACKS
-
         private void CallOnRoomLeft()
         {
             Debug.Log("<color=red>RoomLeft");
             _bus.IPublish(new RequestStateEnter("mainmenu_state"));
             _bus.IPublish(new LevelRequest("mainmenu_scene"));
         }
+
 
         private void CallOnRoomUpdated(Lobby lobby)
         {

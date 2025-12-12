@@ -10,6 +10,7 @@ using Namespace_Level;
 using PurrNet;
 using PurrNet.Transports;
 using UnityEngine;
+using UnityEditor;
 
 namespace Namespace_StateLobby
 {
@@ -35,12 +36,15 @@ namespace Namespace_StateLobby
                 CustomFriendList friendList = Object.FindFirstObjectByType<CustomFriendList>();
                 friendList?.Init(bus, lobbyManager);
 
+                ConnectionStarter connectionStarter = Object.FindFirstObjectByType<ConnectionStarter>();
+                connectionStarter.Init(bus, ui);
+
                 NetworkManager networkManager = Object.FindFirstObjectByType<NetworkManager>();
                 networkManager.onClientConnectionState += (state) =>
                 {
                     if (state != ConnectionState.Disconnected) return;
                     bus.IPublish(new RequestStateEnter("mainmenu_state"));
-                    bus.IPublish(new Namespace_Level.LevelRequest("mainmenu_scene"));
+                    bus.IPublish(new LevelRequest("mainmenu_scene"));
                 };
             });
 

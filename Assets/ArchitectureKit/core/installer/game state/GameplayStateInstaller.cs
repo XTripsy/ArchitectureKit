@@ -61,6 +61,7 @@ namespace Namespace_StateGameplay
             InputActionGameplayState temp = new InputActionGameplayState(bus);
             bus.ISubscribe<ActionClickGameplayState>(_ => temp.ClickGameplay());
             bus.ISubscribe<ActionPauseGameplayState>(_ => temp.PauseGameplay());
+            
         }
     }
 }

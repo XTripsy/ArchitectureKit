@@ -25,7 +25,6 @@ namespace Namespace_Networking
         {
             var bus = ctx.IGetBus;
 
-            // Find existing or create prefab
             INetworkManager networkManager = Object.FindFirstObjectByType<MonoBehaviour>() as INetworkManager;
 
             if (networkManager == null)
@@ -35,10 +34,8 @@ namespace Namespace_Networking
                 networkManager = go.GetComponent<INetworkManager>();
             }
 
-            // Register for global access
             ctx.IRegister<INetworkManager>(networkManager);
 
-            // Wire events → networking actions
             bus.ISubscribe<RequestCreateRoom>(_ => networkManager.StartServer());
             bus.ISubscribe<RequestJoinRoom>(_ => networkManager.StartClient());
             bus.ISubscribe<RequestLeaveRoom>(_ =>
