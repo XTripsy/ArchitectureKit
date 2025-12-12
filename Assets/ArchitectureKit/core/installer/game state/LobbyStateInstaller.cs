@@ -21,13 +21,14 @@ namespace Namespace_StateLobby
             IUIManager ui = installer.IResolve<IUIManager>();
             IGameLoopManager gameLoopManager = installer.IResolve<IGameLoopManager>();
             IObjectManager objectManager = installer.IResolve<IObjectManager>();
+            IPlayerManager playerManager = installer.IResolve<IPlayerManager>();
 
             state.IRegister(name_state, new LobbyState(bus));
 
             _InstallInput(installer, bus, input, name_mapping);
             _InstallInputAction(bus);
             _InstallUI(bus, ui);
-            _InstallObject(bus, gameLoopManager, objectManager);
+            _InstallObject(bus, gameLoopManager, objectManager, playerManager);
         }
 
         private void _InstallInput(IBootstrapContext installer, IEventBus bus, IInputManager input, string name_mapping)
@@ -55,9 +56,9 @@ namespace Namespace_StateLobby
             bus.ISubscribe<LobbyStateExit>(_ => temp.OnLobbyExit());
         }
 
-        private void _InstallObject(IEventBus bus, IGameLoopManager gameLoopManager, IObjectManager objectManager)
+        private void _InstallObject(IEventBus bus, IGameLoopManager gameLoopManager, IObjectManager objectManager, IPlayerManager playerManager)
         {
-            var temp_player = new ActionPlayer(bus, gameLoopManager);
+            var temp_player = new ActionPlayer(bus, gameLoopManager, playerManager);
         }
     }
 }

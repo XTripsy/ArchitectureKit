@@ -46,6 +46,9 @@ namespace Namespace_Player
             IPlayerStateManager playerstate = _gameLoopManager.IGetManager("player_state_manager") as IPlayerStateManager;
             GameObject player = _GetObjectID(id);
 
+            PlayerComponents components = _components.Find(item => item.id == id);
+            _components.Remove(components);
+
             playerstate.IRemoveStateMachine("player_state-" + id);
             GameObject.Destroy(player);
         }
